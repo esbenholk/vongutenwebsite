@@ -1,0 +1,110 @@
+:root {
+  --primary-color: black;
+  --secondary-color: gray;
+  --third-color: white;
+  --font-size: 15px;
+  --margin-size: 15px;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--secondary-color);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.flex-row {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+.flex-column {
+  flex-direction: column;
+  display: flex;
+}
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+/* img {
+  transition: 0.15s opacity;
+}
+img[data-loaded="false"] {
+  opacity: 0;
+} */
+p {
+  margin: 0;
+  min-height: var(--font-size);
+}
+
+.standardButton {
+  margin: var(--margin-size);
+  padding-left: var(--margin-size);
+  padding-right: var(--margin-size);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 35px;
+  height: 45px;
+  font: inherit;
+  font-size: var(--font-size);
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+.active {
+  background-color: var(--third-color);
+}
+
+/* ////////MENU HEADER/////////// */
+
+.menu_link {
+  margin: var(--margin-size);
+  padding-left: var(--margin-size);
+  padding-right: var(--margin-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 35px;
+  height: 45px;
+  font: inherit;
+  font-size: var(--font-size);
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+
+/* hero */
+
+.hero {
+  position: relative;
+  width: 100%;
+}
+.hero span,
+.hero span img {
+  position: relative;
+  width: 100%;
+  object-fit: cover;
+}
+.heroContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 100%;
+  max-height: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
