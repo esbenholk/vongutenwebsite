@@ -6,15 +6,24 @@ import PostCard from "./postCard.js";
 
 import AppContext from "../../globalState.js";
 
+import DB_Item from "./db_item.js";
+
 const breakpointColumnsObj = {
   default: 3,
   1300: 2,
   600: 2,
 };
 
-export default function Projects({ projectList }) {
+export default function Projects({
+  projectList,
+  displayCategoryButton,
+  displayTagButton,
+  updateVisitedLinks,
+  visitedLinks,
+  displayStyle,
+}) {
   const myContext = useContext(AppContext);
-
+  const info = myContext.siteSettings;
   const [allPosts, setAllPosts] = useState(projectList);
 
   const [sortedPosts, setSortedPosts] = useState(null);
@@ -164,46 +173,84 @@ export default function Projects({ projectList }) {
 
   return (
     <div className="projects">
-      <div className="flex-row">
-        {categories &&
-          categories.map((category, index) => (
+      {displayCategoryButton && (
+        <div className="flex-row">
+          {categories &&
+            categories.map((category, index) => (
+              <button
+                className="tag_button standardButton "
+                key={index}
+                id={"category_" + category.title + ""}
+                onClick={(evt) => {
+                  setCategory({ category });
+                }}
+              >
+                {category.title}
+              </button>
+            ))}
+        </div>
+      )}
+
+      {displayTagButton && (
+        <div className="flex-row">
+          {tags.map((tag, index) => (
             <button
-              className="tag_button standardButton "
+              className="tag_button standardButton"
               key={index}
-              id={"category_" + category.title + ""}
-              onClick={(evt) => {
-                setCategory({ category });
+              id={"tag_" + tag + ""}
+              onClick={() => {
+                setTag({ tag });
               }}
             >
-              {category.title}
+              {tag}
             </button>
           ))}
-      </div>
-      <div className="flex-row">
-        {tags.map((tag, index) => (
-          <button
-            className="tag_button standardButton"
-            key={index}
-            id={"tag_" + tag + ""}
-            onClick={() => {
-              setTag({ tag });
-            }}
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
+        </div>
+      )}
 
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid fullWidthPadded"
-        columnClassName="my-masonry-grid_column"
-      >
-        {sortedPosts &&
-          sortedPosts.map((post, index) => (
-            <PostCard post={post} key={index} />
-          ))}
-      </Masonry>
+      {displayStyle === "list" && (
+        <div className="list">
+          {sortedPosts
+            ? sortedPosts.map((project, index) => (
+                <DB_Item
+                  key={index}
+                  url={project.slug.current}
+                  title={project.title}
+                  year={project.time ? project.time : project.date}
+                  description={project.description}
+                  updateVisitedLinks={updateVisitedLinks}
+                  visitedLinks={visitedLinks}
+                />
+              ))
+            : null}
+          {info.comingProjects
+            ? info.comingProjects.map((project, index) => (
+                <DB_Item
+                  key={index}
+                  url={project.link}
+                  title={project.title}
+                  year={project.year}
+                  description={project.description}
+                  updateVisitedLinks={updateVisitedLinks}
+                  visitedLinks={visitedLinks}
+                />
+              ))
+            : null}
+        </div>
+      )}
+
+      {displayStyle === "masonry" && sortedPosts ? (
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid fullWidthPadded"
+          columnClassName="my-masonry-grid_column"
+        >
+          {sortedPosts &&
+            sortedPosts.map((post, index) => (
+              <PostCard post={post} key={index} />
+            ))}
+        </Masonry>
+      ) : null}
     </div>
   );
 }

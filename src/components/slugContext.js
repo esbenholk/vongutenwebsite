@@ -1,30 +1,46 @@
-import React, { useContext, lazy } from "react";
+import React, { lazy } from "react";
 
-import { NavLink } from "react-router-dom";
-import AppContext from "../globalState";
 import { useParams } from "react-router-dom";
-import useWindowDimensions from "./functions/useWindowDimensions";
 
 const SinglePost = lazy(() => import("./singlePost.js"));
 const Category = lazy(() => import("./Category.js"));
 const SinglePage = lazy(() => import("./page"));
 
-export default function SlugContext({ CategoryNames, PageNames }) {
+export default function SlugContext({
+  CategoryNames,
+  PageNames,
+  updateSiteColor,
+  updateVisitedLinks,
+  visitedLinks,
+}) {
   const { slug } = useParams();
-  console.log(CategoryNames, PageNames);
 
   return (
     <>
-      {PageNames.find((name) => name.title.toLowerCase() == slug) ? (
-        <SinglePage />
+      {CategoryNames.find((name) => name.toLowerCase() == slug) ? (
+        <Category
+          CategoryNames={CategoryNames}
+          PageNames={PageNames}
+          updateSiteColor={updateSiteColor}
+          updateVisitedLinks={updateVisitedLinks}
+          visitedLinks={visitedLinks}
+        />
+      ) : PageNames.find((name) => name.slug.current.toLowerCase() == slug) ? (
+        <SinglePage
+          CategoryNames={CategoryNames}
+          PageNames={PageNames}
+          updateSiteColor={updateSiteColor}
+          updateVisitedLinks={updateVisitedLinks}
+          visitedLinks={visitedLinks}
+        />
       ) : (
-        <>
-          {CategoryNames.find((name) => name.toLowerCase() == slug) ? (
-            <Category />
-          ) : (
-            <SinglePost />
-          )}
-        </>
+        <SinglePost
+          CategoryNames={CategoryNames}
+          PageNames={PageNames}
+          updateSiteColor={updateSiteColor}
+          updateVisitedLinks={updateVisitedLinks}
+          visitedLinks={visitedLinks}
+        />
       )}
     </>
   );

@@ -1,23 +1,25 @@
 /* eslint-disable no-lone-blocks */
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import React, { Suspense, lazy, useEffect, useState, createRef } from "react";
-// import NavBar from "./components/NavBar.js";
+import React, { Suspense, useEffect, useState, createRef } from "react";
 import "./App.css";
 import sanityClient from "./client";
-import Header from "./components/Header";
 import AppContext from "./globalState";
-
 import { AnimatePresence, motion } from "framer-motion";
-import useWindowDimensions from "./components/functions/useWindowDimensions";
+
 import { HeadTags } from "./components/blocks/helmetHeaderTags";
 
+import { pageBuilderquerystring } from "./queeries.js";
+
 import SlugContext from "./components/slugContext";
-
+import Header from "./components/Header";
+import Projects from "./components/blocks/ProjectSorting";
 import Footer from "./components/Footer";
-
+import Loader from "./components/blocks/loader";
 import ScrollToTop from "./components/blocks/scrollToTop";
-
-const LandingPage = lazy(() => import("./components/LandingPage.js"));
+import Image from "./components/blocks/image.js";
+import BlockContent from "./components/blocks/BlockContent.js";
+import PageBuilder from "./components/pageBuilder.js";
+import LandingPage from "./components/LandingPage.js";
 
 function App() {
   const [siteSettings, setSiteSettings] = useState();
@@ -25,18 +27,35 @@ function App() {
   const [tags, setTags] = useState([]);
   const [categories, setCategories] = useState([]);
   const mainRef = createRef();
-  const { width } = useWindowDimensions();
   const [categoryNames, setCategoryNames] = useState([]);
   const [pageNames, setPageNames] = useState([]);
+  const [colorCode, setColorCode] = useState("blue");
+  const [shouldToggleMode, setShouldToggleMode] = useState(false);
+  const [visitedLinks, setVisitedLinks] = useState([]);
 
+  const updateVisitedLinks = (newLink) => {
+    setVisitedLinks([...visitedLinks, newLink]);
+    console.log(visitedLinks);
+  };
+
+  const updateSiteColor = (newColor) => {
+    setColorCode(newColor);
+    console.log("should update color", newColor);
+  };
+
+  const updateShouldToggleMode = (bool) => {
+    setShouldToggleMode(bool);
+  };
   // get sitesettings and page names (for slug redirection)
   useEffect(() => {
     sanityClient
       .fetch(
-        '*[_type == "siteSettings" ]{mainImage{asset->{_id,url}},favicon{asset->{_id,url}}, title, greeting, logo{asset->{_id,url}}, socialMediaHandles[]{logo{asset->{_id,url}},url, URLName},  pageBuilder[]{ _type == "hero" => { _type, heading, tagline, image}, _type == "gallery" => { _type, heading,images}, _type == "breadContent" => { _type, heading, content}, _type == "connectedProjects" => {_type, heading, projects[]->{title, slug, mainImage}}}, headerMenu[] {_type == "menuItem" => { _type, page->{slug}, project->{slug}, url, title}}, footerMenu[] {_type == "menuItem" => { _type, page->{slug}, project->{slug}, url, title}}}'
+        `*[_type == "siteSettings" ]{comingProjects, color, mainImage{asset->{_id,url}, hotspot},mainImage2{asset->{_id,url}, hotspot}, logo{asset->{_id,url}}, logo2{asset->{_id,url}}, greeting, greeting2,title,favicon{asset->{_id,url}}, title,  greeting, logo{asset->{_id,url}, hotspot}, breadContent,footerMenuSocials[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, ${pageBuilderquerystring},  headerMenu[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, footerMenu {_type == "linkArrayColumns" => { _type,heading, columns[]{heading, links{external_links[]{title, image, url, page->{slug}, project->{slug}}}}}}}`
       )
       .then((data) => {
+        console.log("SITE SETTINGS", data);
         setSiteSettings(data[0]);
+        setColorCode(data[0].color);
       })
       .catch(console.error);
 
@@ -46,35 +65,50 @@ function App() {
         setPageNames(data);
       })
       .catch(console.error);
+    sanityClient
+      .fetch('*[_type == "category" ]{title, slug}')
+      .then((data) => {
+        var tempCategoryNames = [];
+
+        if (data) {
+          for (let index = 0; index < data.length; index++) {
+            const cat = data[index];
+            tempCategoryNames.push(cat.slug.current.toLowerCase());
+          }
+          setCategoryNames(tempCategoryNames);
+        }
+      })
+      .catch(console.error);
   }, []);
 
   ///get project data, set category names
   useEffect(() => {
     sanityClient
       .fetch(
-        ' *[_type == "project"]{ title, slug, mainImage, tags, categories[]->{title, slug}}'
+        ' *[_type == "project"]{ title, date, time, slug, description, tags, categories[]->{title, slug}}'
       )
       .then((data) => {
-        data.sort((a, b) => b.year - a.year);
+        data.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
 
         setProjectList(data);
+        // console.log("PROJECT LISt", data);
 
-        var categories = [];
-        var tempCategoryNames = [];
-        for (let index = 0; index < data.length; index++) {
-          const post = data[index];
-          if (post.categories != null && Array.isArray(post.categories)) {
-            for (let index = 0; index < post.categories.length; index++) {
-              const category = post.categories[index];
+        // var categories = [];
+        // var tempCategoryNames = [];
+        // for (let index = 0; index < data.length; index++) {
+        //   const post = data[index];
+        //   if (post.categories != null && Array.isArray(post.categories)) {
+        //     for (let index = 0; index < post.categories.length; index++) {
+        //       const category = post.categories[index];
 
-              if (!tempCategoryNames.includes(category.title)) {
-                tempCategoryNames.push(category.title);
-                categories.push(category);
-              }
-            }
-          }
-        }
-        setCategoryNames(tempCategoryNames);
+        //       if (!tempCategoryNames.includes(category.title)) {
+        //         tempCategoryNames.push(category.title.toLowerCase());
+        //         categories.push(category);
+        //       }
+        //     }
+        //   }
+        // }
+        // setCategoryNames(tempCategoryNames);
       })
       .catch(console.error);
   }, []);
@@ -86,10 +120,12 @@ function App() {
     tags: tags,
     categories: categories,
     mainRef: mainRef,
+    colorCode: colorCode,
     setSiteSettings,
     setProjectList,
     setTags,
     setCategories,
+    setColorCode,
   };
 
   return (
@@ -100,13 +136,12 @@ function App() {
             title={siteSettings.title}
             description={siteSettings.greeting}
             imageUrl={siteSettings.logo.asset.url}
-            faviconUrl={siteSettings.logo.asset.url}
+            faviconUrl={siteSettings.favicon.asset.url}
           />
-          <Suspense fallback={<h1>loading</h1>}>
+          <Suspense fallback={<Loader color1={colorCode} color2="white" />}>
             <AppContext.Provider value={globalContext}>
               <BrowserRouter>
-                {siteSettings && <Header />}
-
+                <Header color={colorCode} />
                 <AnimatePresence>
                   <motion.div
                     className="mainContainer"
@@ -118,13 +153,21 @@ function App() {
                     <ScrollToTop>
                       <Switch>
                         <Route exact path="/">
-                          {siteSettings && <LandingPage />}
+                          <LandingPage
+                            updateVisitedLinks={updateVisitedLinks}
+                            visitedLinks={visitedLinks}
+                            updateSiteColor={updateSiteColor}
+                          />
                         </Route>
+
                         <Route exact path="/:slug">
                           {categoryNames && (
                             <SlugContext
                               CategoryNames={categoryNames}
                               PageNames={pageNames}
+                              updateSiteColor={updateSiteColor}
+                              updateVisitedLinks={updateVisitedLinks}
+                              visitedLinks={visitedLinks}
                             />
                           )}
                         </Route>
@@ -132,6 +175,12 @@ function App() {
                     </ScrollToTop>
                   </motion.div>
                 </AnimatePresence>
+                <Footer
+                  color={colorCode}
+                  // visitedLinks={visitedLinks}
+                  // updateVisitedLinks={updateVisitedLinks}
+                  logo={siteSettings.logo}
+                />
               </BrowserRouter>
             </AppContext.Provider>
           </Suspense>

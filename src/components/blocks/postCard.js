@@ -44,26 +44,28 @@ export default function PostCard({ post }) {
             </p>
           ))}
       </div>
-      <Link to={post.slug.current}>
-        {post.mainImage.hotspot ? (
-          <img
-            src={urlFor(post.mainImage).width(200).url()}
-            alt={post.mainImage.alt}
-            style={{
-              objectPosition: `${post.mainImage.hotspot.x * 100}% ${
-                post.mainImage.hotspot.y * 100
-              }%`,
-            }}
-            className="post_card_image"
-          />
-        ) : (
-          <img
-            src={urlFor(post.mainImage).width(200).url()}
-            alt={post.mainImage.alt}
-            className="post_card_image"
-          />
-        )}
-      </Link>
+      {post.mainImage && (
+        <Link to={post.slug.current}>
+          {post.mainImage.hotspot ? (
+            <img
+              src={urlFor(post.mainImage).width(200).url()}
+              alt={post.mainImage.alt}
+              style={{
+                objectPosition: `${post.mainImage.hotspot.x * 100}% ${
+                  post.mainImage.hotspot.y * 100
+                }%`,
+              }}
+              className="post_card_image"
+            />
+          ) : (
+            <img
+              src={urlFor(post.mainImage).width(200).url()}
+              alt={post.mainImage.alt}
+              className="post_card_image"
+            />
+          )}
+        </Link>
+      )}
     </div>
   );
 }

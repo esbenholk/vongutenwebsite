@@ -1,41 +1,35 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import sanityClient from "../client";
-import { useParams, useHistory } from "react-router-dom";
-import { motion } from "framer-motion";
-import Image from "./blocks/image";
-import CustomCarousel from "./blocks/Carousel";
-import { Link } from "react-router-dom";
-
-import BlockContent from "./blocks/BlockContent";
-
-import Masonry from "react-masonry-css";
+import { useParams } from "react-router-dom";
 import { HeadTags } from "./blocks/helmetHeaderTags";
-
-import useWindowDimensions from "./functions/useWindowDimensions";
-
-import Loader from "./blocks/loader";
-import VideoPlayer from "./blocks/videoPlayer";
+// import Loader from "./blocks/loader";
 import PageBuilder from "./pageBuilder";
+import { pageBuilderquerystring } from "../queeries";
 
-export default function SinglePage({}) {
-  const history = useHistory();
+export default function SinglePage({
+  CategoryNames,
+  PageNames,
+  visitedLinks,
+  updateVisitedLinks,
+  updateSiteColor,
+}) {
   const { slug } = useParams();
   const [singlePage, setSinglePage] = useState();
+
   ///get project data, set category names
   useEffect(() => {
     sanityClient
       .fetch(
-        `*[_type == "page" && slug.current == "${slug}"]{ title, slug, mainImage, tags, categories[]->{title, slug}, pageBuilder[]{ _type == "hero" => { _type, heading, tagline, image}, _type == "gallery" => { _type, heading,images}, _type == "breadContent" => { _type, heading, content}, _type == "connectedProjects" => {_type, heading, projects[]->{title, slug}}},} `
+        `*[_type == "page" && slug.current == "${slug}"]{ title, slug, mainImage, tags, categories[]->{title, slug},${pageBuilderquerystring}} `
       )
       .then((data) => {
-        console.log("project details", data, slug);
         setSinglePage(data[0]);
       })
       .catch(console.error);
-  }, []);
+  }, [slug]);
 
-  if (!singlePage) return <Loader />;
-  console.log("PROJECT", singlePage);
+  // if (!singlePage) return <Loader />;
+
   return (
     <>
       {singlePage && (
@@ -45,9 +39,11 @@ export default function SinglePage({}) {
             //   description={singlePost.recap[0].children[0].text}
             // image={singlePage.mainImage.asset.url}
           />
-          {singlePage.pageBuilder && (
-            <PageBuilder pageBuilder={singlePage.pageBuilder} />
-          )}
+          <div style={{ minHeight: "100vh" }}>
+            {singlePage.pageBuilder && (
+              <PageBuilder pageBuilder={singlePage.pageBuilder} />
+            )}
+          </div>
         </>
       )}
     </>
