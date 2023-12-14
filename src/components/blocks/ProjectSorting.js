@@ -89,7 +89,7 @@ export default function Projects({
         setTag(highlightedTag);
       }, 10);
     }
-  }, [slug]);
+  }, [highlightedTag]);
 
   useEffect(() => {
     if (
