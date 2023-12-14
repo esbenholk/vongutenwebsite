@@ -6,7 +6,7 @@ import HeroProjectGrid from "./hero.js";
 
 import AppContext from "../../globalState.js";
 
-import DB_Item from "./db_item.js";
+import DBItem from "./db_item.js";
 
 import SquareCard from "./squareCard.js";
 
@@ -57,6 +57,15 @@ export default function Projects({
           if (!tagNames.includes(tag)) {
             tagNames.push(tag);
             tags.push(tag);
+            if (highlightedTag === tag) {
+              const tempTags = [...currentTags];
+              tempTags.push(tag);
+              setCurrentTags(tempTags);
+              let button = document.getElementById("tag_" + tag);
+              if (button) {
+                button.classList.add("active");
+              }
+            }
           }
         }
       }
@@ -81,15 +90,7 @@ export default function Projects({
 
     let sortedYears = [...new Set(years)];
     setYears(sortedYears);
-  }, [projectList, currentTags]);
-
-  useEffect(() => {
-    if (highlightedTag) {
-      setTimeout(() => {
-        setTag(highlightedTag);
-      }, 10);
-    }
-  }, [highlightedTag]);
+  }, [projectList, currentTags, highlightedTag]);
 
   useEffect(() => {
     if (
@@ -194,7 +195,7 @@ export default function Projects({
       }
     }
     const tempYears = [];
-    if (year == "AllTime") {
+    if (year === "AllTime") {
       setCurrentYears(tempYears);
     } else if (!currentYears.includes(year)) {
       // const tempYears = [...currentYears];
@@ -353,7 +354,7 @@ export default function Projects({
         <div className="list">
           {sortedPosts
             ? sortedPosts.map((project, index) => (
-                <DB_Item
+                <DBItem
                   key={index}
                   url={
                     project.slug
@@ -372,7 +373,7 @@ export default function Projects({
             : null}
           {info.comingProjects
             ? info.comingProjects.map((project, index) => (
-                <DB_Item
+                <DBItem
                   key={index}
                   url={project.link}
                   title={project.title}

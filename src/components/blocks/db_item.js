@@ -2,7 +2,7 @@ import React from "react";
 import BlockContent from "./BlockContent";
 import { Link } from "react-router-dom";
 
-function DB_Item({
+function DBItem({
   year,
   title,
   url,
@@ -71,4 +71,4 @@ function DB_Item({
   );
 }
 
-export default DB_Item;
+export default DBItem;
