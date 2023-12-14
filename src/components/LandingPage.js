@@ -5,7 +5,7 @@ import PageBuilder from "./pageBuilder";
 import AppContext from "../globalState";
 import Image from "./blocks/image";
 import BlockContent from "./blocks/BlockContent";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 
 export default function LandingPage({
   updateVisitedLinks,
@@ -18,7 +18,10 @@ export default function LandingPage({
   const { slug } = useParams();
   useEffect(() => {
     updateSiteColor(info.color);
-  }, [slug]);
+  }, [slug, info.color, updateSiteColor]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   console.log("LANDING PAGE", info, myContext.projectList);
 
@@ -53,7 +56,7 @@ export default function LandingPage({
           visitedLinks={visitedLinks}
           projectList={myContext.projectList}
           displayCategoryButton={false}
-          displayTagButton={true}
+          displayTagButton={false}
           displayStyle="list"
         />
       </div>

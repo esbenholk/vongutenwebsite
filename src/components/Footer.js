@@ -25,7 +25,7 @@ export default function Footer({ color, logo }) {
             zIndex: 0,
             position: "absolute",
             bottom: "100%",
-            minHeight: "500px",
+            minHeight: "300px",
             width: "100%",
             backgroundImage: `linear-gradient( to top, ${color} 10%, rgba(246,246,246,0) )`,
             pointerEvents: "none",

@@ -47,7 +47,7 @@ export default function MenuItem({ menuItem, imageInline, imagesize }) {
               {menuItem.page ? (
                 <NavLink
                   key={menuItem.page.slug.current}
-                  to={menuItem.page.slug.current}
+                  to={"/" + menuItem.page.slug.current}
                 >
                   <MenuImage height={imagesize} image={menuItem.image} />
                   {imageInline && <p>{menuItem.title}</p>}
@@ -58,7 +58,7 @@ export default function MenuItem({ menuItem, imageInline, imagesize }) {
                   {menuItem.project && (
                     <NavLink
                       key={menuItem.project.slug.current}
-                      to={menuItem.project.slug.current}
+                      to={"/" + menuItem.project.slug.current}
                     >
                       <MenuImage height={imagesize} image={menuItem.image} />
                       {imageInline && <p>{menuItem.title}</p>}

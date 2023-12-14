@@ -1,5 +1,5 @@
 /* eslint-disable no-lone-blocks */
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React, { Suspense, useEffect, useState, createRef } from "react";
 import "./App.css";
 import sanityClient from "./client";
@@ -12,13 +12,8 @@ import { pageBuilderquerystring } from "./queeries.js";
 
 import SlugContext from "./components/slugContext";
 import Header from "./components/Header";
-import Projects from "./components/blocks/ProjectSorting";
 import Footer from "./components/Footer";
 import Loader from "./components/blocks/loader";
-import ScrollToTop from "./components/blocks/scrollToTop";
-import Image from "./components/blocks/image.js";
-import BlockContent from "./components/blocks/BlockContent.js";
-import PageBuilder from "./components/pageBuilder.js";
 import LandingPage from "./components/LandingPage.js";
 
 function App() {
@@ -46,6 +41,9 @@ function App() {
   const updateShouldToggleMode = (bool) => {
     setShouldToggleMode(bool);
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   // get sitesettings and page names (for slug redirection)
   useEffect(() => {
     sanityClient
@@ -85,13 +83,13 @@ function App() {
   useEffect(() => {
     sanityClient
       .fetch(
-        ' *[_type == "project"]{ title, date, time, slug, description, tags, categories[]->{title, slug}}'
+        ' *[_type == "project"]{ title, year, time, mainImage, slug, description, tags, categories[]->{title, slug}}'
       )
       .then((data) => {
-        data.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+        data.sort((a, b) => b.year - a.year);
 
         setProjectList(data);
-        // console.log("PROJECT LISt", data);
+        console.log("PROJECT LISt", data);
 
         // var categories = [];
         // var tempCategoryNames = [];
@@ -141,7 +139,7 @@ function App() {
           <Suspense fallback={<Loader color1={colorCode} color2="white" />}>
             <AppContext.Provider value={globalContext}>
               <BrowserRouter>
-                <Header color={colorCode} />
+                <Header color={colorCode} shouldToggleMode={shouldToggleMode} />
                 <AnimatePresence>
                   <motion.div
                     className="mainContainer"
@@ -150,29 +148,35 @@ function App() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <ScrollToTop>
-                      <Switch>
-                        <Route exact path="/">
+                    <Routes>
+                      <Route
+                        exact="true"
+                        path="/"
+                        element={
                           <LandingPage
                             updateVisitedLinks={updateVisitedLinks}
                             visitedLinks={visitedLinks}
                             updateSiteColor={updateSiteColor}
                           />
-                        </Route>
-
-                        <Route exact path="/:slug">
-                          {categoryNames && (
+                        }
+                      ></Route>
+                      {categoryNames && (
+                        <Route
+                          exact="true"
+                          path="/:slug"
+                          element={
                             <SlugContext
                               CategoryNames={categoryNames}
                               PageNames={pageNames}
                               updateSiteColor={updateSiteColor}
                               updateVisitedLinks={updateVisitedLinks}
                               visitedLinks={visitedLinks}
+                              updateShouldToggleMode={updateShouldToggleMode}
                             />
-                          )}
-                        </Route>
-                      </Switch>
-                    </ScrollToTop>
+                          }
+                        ></Route>
+                      )}
+                    </Routes>
                   </motion.div>
                 </AnimatePresence>
                 <Footer

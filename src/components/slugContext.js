@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 
@@ -12,35 +12,45 @@ export default function SlugContext({
   updateSiteColor,
   updateVisitedLinks,
   visitedLinks,
+  updateShouldToggleMode,
 }) {
   const { slug } = useParams();
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
-      {CategoryNames.find((name) => name.toLowerCase() == slug) ? (
+      {CategoryNames.find((name) => name.toLowerCase() === slug) ? (
         <Category
           CategoryNames={CategoryNames}
           PageNames={PageNames}
           updateSiteColor={updateSiteColor}
           updateVisitedLinks={updateVisitedLinks}
           visitedLinks={visitedLinks}
+          updateShouldToggleMode={updateShouldToggleMode}
         />
-      ) : PageNames.find((name) => name.slug.current.toLowerCase() == slug) ? (
-        <SinglePage
-          CategoryNames={CategoryNames}
-          PageNames={PageNames}
-          updateSiteColor={updateSiteColor}
-          updateVisitedLinks={updateVisitedLinks}
-          visitedLinks={visitedLinks}
-        />
+      ) : PageNames.find((name) => name.slug.current.toLowerCase() === slug) ? (
+        <>
+          <SinglePage
+            CategoryNames={CategoryNames}
+            PageNames={PageNames}
+            updateSiteColor={updateSiteColor}
+            updateVisitedLinks={updateVisitedLinks}
+            visitedLinks={visitedLinks}
+            updateShouldToggleMode={updateShouldToggleMode}
+          />
+        </>
       ) : (
-        <SinglePost
-          CategoryNames={CategoryNames}
-          PageNames={PageNames}
-          updateSiteColor={updateSiteColor}
-          updateVisitedLinks={updateVisitedLinks}
-          visitedLinks={visitedLinks}
-        />
+        <>
+          <SinglePost
+            updateShouldToggleMode={updateShouldToggleMode}
+            CategoryNames={CategoryNames}
+            PageNames={PageNames}
+            updateSiteColor={updateSiteColor}
+            updateVisitedLinks={updateVisitedLinks}
+            visitedLinks={visitedLinks}
+          />
+        </>
       )}
     </>
   );

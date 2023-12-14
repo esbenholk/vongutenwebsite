@@ -10,24 +10,39 @@ function DB_Item({
   updateVisitedLinks,
   visitedLinks,
 }) {
+  console.log(
+    "DBITEM",
+    year,
+    title,
+    url,
+    description,
+    updateVisitedLinks,
+    visitedLinks
+  );
   return (
     <div className="flex-row db_item">
       <div className="flex-row">
-        <div className="year">{year && <BlockContent blocks={year} />}</div>
+        <div className="year">
+          {!Number.isInteger(year) ? (
+            <BlockContent blocks={year} />
+          ) : (
+            <p>{year}</p>
+          )}
+        </div>
         {url && !url.includes("http") ? (
           <Link
             className={`title ${
-              visitedLinks.includes(title) ? "visited" : "new"
+              visitedLinks.includes(url) ? "visited" : "new"
             }`}
-            to={url}
+            to={"/" + url}
             onClick={() => {
               console.log("should update links");
-              updateVisitedLinks(title);
+              updateVisitedLinks(url);
             }}
           >
             {title}
           </Link>
-        ) : url.includes("http") ? (
+        ) : url && url.includes("http") ? (
           <>
             {" "}
             <a

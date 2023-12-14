@@ -1,21 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 
-const PermissionButton = styled.div`
-  width: 144.5px;
-  height: 139px;
-  background: url(../assets/jungle/tapme.png) no-repeat 0 0 / 100% auto;
-  position: absolute;
-  left: calc(50vw - 72.25px);
-  top: calc(50vh - 69.5px);
-  cursor: pointer;
-`;
 function Loader({ color1, color2 }) {
   return (
     <>
-      {/* <div className="cell">
-        <div className="circle gelatine"></div>
-      </div> */}
       <div
         className={"loaderCover"}
         style={{

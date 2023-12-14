@@ -16,9 +16,10 @@ export default function Image(props) {
   const classs = props.class;
   const width = props.width;
   const maxHeight = props.height;
+  const desc = props.imageDescription;
 
   return (
-    <>
+    <div>
       {image && (
         <>
           {image.hotspot ? (
@@ -57,6 +58,7 @@ export default function Image(props) {
           )}
         </>
       )}
-    </>
+      {desc && <p>{desc}</p>}
+    </div>
   );
 }

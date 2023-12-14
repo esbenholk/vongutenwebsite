@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import sanityClient from "../../client";
 import { Link } from "react-router-dom";
-import useWindowDimensions from "../functions/useWindowDimensions";
 
 import imageUrlBuilder from "@sanity/image-url";
 // Get a pre-configured url-builder from your sanity client
@@ -11,57 +10,31 @@ function urlFor(source) {
   return builder.image(source);
 }
 
-export default function PostCard({ post }) {
-  const [isShown, setIsShown] = useState(false);
-
-  const { width } = useWindowDimensions();
-
-  var color;
-  if (post.color) {
-    color = post.color;
-  } else {
-    color = "#FFFFFF";
-  }
-
+export default function PostCard({ post, class_name }) {
   return (
     <div className="post_card">
-      <Link to={post.slug.current} className="w-full teaser-link">
+      {/* <Link to={post.slug.current} className="w-full teaser-link">
         <h1 className="noMargin">{post.title}</h1>
-      </Link>
-      <div className="flex-row">
-        {post.tags &&
-          post.tags.map((tag, index) => (
-            <p className="tag postCardTag" key={index}>
-              {tag}
-            </p>
-          ))}
-      </div>
-      <div className="flex-row">
-        {post.categories &&
-          post.categories.map((category, index) => (
-            <p className="tag postCardTag" key={index}>
-              {category.title}
-            </p>
-          ))}
-      </div>
+      </Link> */}
+
       {post.mainImage && (
-        <Link to={post.slug.current}>
+        <Link to={"/" + post.slug.current}>
           {post.mainImage.hotspot ? (
             <img
-              src={urlFor(post.mainImage).width(200).url()}
+              src={urlFor(post.mainImage).height(511).url()}
               alt={post.mainImage.alt}
               style={{
                 objectPosition: `${post.mainImage.hotspot.x * 100}% ${
                   post.mainImage.hotspot.y * 100
                 }%`,
               }}
-              className="post_card_image"
+              className={class_name}
             />
           ) : (
             <img
-              src={urlFor(post.mainImage).width(200).url()}
+              src={urlFor(post.mainImage).height(511).url()}
               alt={post.mainImage.alt}
-              className="post_card_image"
+              className={class_name}
             />
           )}
         </Link>

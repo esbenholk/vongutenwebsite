@@ -5,6 +5,7 @@ import { HeadTags } from "./blocks/helmetHeaderTags";
 // import Loader from "./blocks/loader";
 import PageBuilder from "./pageBuilder";
 import { pageBuilderquerystring } from "../queeries";
+import Loader from "./blocks/loader";
 
 export default function SinglePage({
   CategoryNames,
@@ -12,23 +13,32 @@ export default function SinglePage({
   visitedLinks,
   updateVisitedLinks,
   updateSiteColor,
+  updateShouldToggleMode,
 }) {
   const { slug } = useParams();
   const [singlePage, setSinglePage] = useState();
 
   ///get project data, set category names
   useEffect(() => {
+    updateShouldToggleMode(false);
     sanityClient
       .fetch(
-        `*[_type == "page" && slug.current == "${slug}"]{ title, slug, mainImage, tags, categories[]->{title, slug},${pageBuilderquerystring}} `
+        `*[_type == "page" && slug.current == "${slug}"]{ title, color, slug, mainImage, tags, categories[]->{title, slug},${pageBuilderquerystring}} `
       )
       .then((data) => {
         setSinglePage(data[0]);
+        if (data[0].color) {
+          updateSiteColor(data[0].color);
+        }
       })
       .catch(console.error);
-  }, [slug]);
+  }, [slug, updateShouldToggleMode, updateSiteColor]);
 
-  // if (!singlePage) return <Loader />;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (!singlePage) return <Loader />;
 
   return (
     <>
@@ -41,7 +51,11 @@ export default function SinglePage({
           />
           <div style={{ minHeight: "100vh" }}>
             {singlePage.pageBuilder && (
-              <PageBuilder pageBuilder={singlePage.pageBuilder} />
+              <PageBuilder
+                pageBuilder={singlePage.pageBuilder}
+                visitedLinks={visitedLinks}
+                updateVisitedLinks={updateVisitedLinks}
+              />
             )}
           </div>
         </>

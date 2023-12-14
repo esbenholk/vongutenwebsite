@@ -8,7 +8,7 @@ function ConnectedProjects({ projects, heading }) {
   return (
     <>
       {heading && <h1>{heading}</h1>}
-      <div className="horizontalScroll overscrollPadded">
+      <div className="flex-row connectedProjects">
         {connectedProjects &&
           connectedProjects.map((post, index) => (
             <PostCard post={post} key={index} />
