@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Hero({ image, updateVisitedLinks, url }) {
   const { width, height } = useWindowDimensions();
   return (
-    <div className="hero">
+    <div className="hero blockitem">
       <Link
         onClick={() => {
           updateVisitedLinks(url);

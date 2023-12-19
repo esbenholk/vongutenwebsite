@@ -64,8 +64,8 @@ export default function SinglePost({
               title={project.title}
             />
             <div className="flex-row projectdetails fold">
-              <div className="flex-column projectheadline"></div>
-              <div className="flex-column">
+              <div className="leftMargin"></div>
+              <div className="flex-column projectdetailslist">
                 <div className="flex-row blockitem fold">
                   <div className="flex-column">
                     {project.time ? (

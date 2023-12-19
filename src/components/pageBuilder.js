@@ -3,12 +3,15 @@ import BlockContent from "./blocks/BlockContent";
 import Hero from "./blocks/hero";
 import Video from "./blocks/videoPlayer";
 import ConnectedProjects from "./connectedProject";
+import ConnectedRessources from "./connectedRessources";
 import Projects from "./blocks/ProjectSorting";
 import Image from "./blocks/image";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { SquareImage } from "./blocks/squareCard";
 import BreadContent from "./blocks/BreadContent";
-
+import { ConstrainedImage } from "./blocks/image";
+import useWindowDimensions from "./functions/useWindowDimensions";
 function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
+  const { width } = useWindowDimensions();
   return (
     <>
       {pageBlock._type === "sortedProjects" && (
@@ -16,23 +19,17 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
       )}
       {/* {page.projects ? <HorizontalScroll projects={page.projects} /> : null} */}
       {pageBlock._type === "gallery" && (
-        <>
-          {pageBlock.images ? (
-            <>
-              <ResponsiveMasonry
-                columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-              >
-                <Masonry>
-                  {pageBlock.images.map((image, index) => (
-                    <>
-                      <Image image={image} key={index} />
-                    </>
-                  ))}
-                </Masonry>
-              </ResponsiveMasonry>
-            </>
-          ) : null}
-        </>
+        <div className="flex-row wrap align-center blockitem">
+          {" "}
+          {pageBlock.images.map((image, index) => (
+            <SquareImage
+              image={image}
+              key={index}
+              class_name={"instagrampic"}
+              width={500}
+            />
+          ))}
+        </div>
       )}
       {pageBlock._type === "hero" && (
         <Hero
@@ -50,10 +47,10 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
         />
       )}
       {pageBlock._type === "connectedRessources" && (
-        <Projects
-          projectList={pageBlock.ressources}
+        <ConnectedRessources
+          ressources={pageBlock.ressources}
           heading={pageBlock.heading}
-          displayStyle={"list"}
+          type={pageBlock.type}
           updateVisitedLinks={updateVisitedLinks}
           visitedLinks={visitedLinks}
           displayCategoryButton={false}
@@ -78,52 +75,71 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
       {pageBlock._type === "breadContent" && (
         <>
           {pageBlock.content && (
-            <div className="blockitem">
-              <div className="textblock">
+            <div className="blockItem">
+              <div className="textBlock">
                 <BlockContent
                   blocks={pageBlock.content}
                   heading={pageBlock.heading}
+                  readmore={pageBlock.readmorecontent}
                 />
               </div>
             </div>
           )}
         </>
       )}
+      {pageBlock._type === "customImage" && (
+        <div
+          className="flex-row align-center block blockitem"
+          style={{ width: "100%" }}
+        >
+          <div className="flex-column align-center">
+            <Image image={pageBlock.customImage} />
+            {pageBlock.customImage.imageDescription && (
+              <p>{pageBlock.customImage.imageDescription}</p>
+            )}
+          </div>
+        </div>
+      )}
       {pageBlock._type === "row" && (
         <div
-          className="flex-row align-center fold blockitem "
+          className="flex-row justify-center gap fold block blockitem"
           style={{ width: "100%" }}
         >
           {pageBlock.rowContent.map((rowBlock, index) => (
-            <div key={index} className="block">
+            <div
+              key={index}
+              className="rowblock"
+              style={{
+                maxWidth:
+                  width > 900 && 100 / pageBlock.rowContent.length + "%",
+              }}
+            >
               {rowBlock.customImage && (
-                <Image
-                  image={rowBlock.customImage}
-                  imageDescription={
-                    rowBlock.customImage.imageDescription &&
-                    rowBlock.customImage.imageDescription
-                  }
-                />
+                <div className="flex-column align-center">
+                  <ConstrainedImage image={rowBlock.customImage} />
+                  {rowBlock.customImage.imageDescription && (
+                    <p>{rowBlock.customImage.imageDescription}</p>
+                  )}
+                </div>
+              )}
+              {rowBlock.content && (
+                <div className="textContent">
+                  <BlockContent blocks={rowBlock.content} />
+                </div>
               )}
             </div>
           ))}
         </div>
       )}{" "}
-      {pageBlock._type === "customImage" && (
-        <div
-          className="flex-row align-center blockitem"
-          style={{ width: "100%" }}
-        >
-          <Image
-            image={pageBlock.customImage}
-            imageDescription={
-              pageBlock.customImage.imageDescription &&
-              pageBlock.customImage.imageDescription
-            }
-          />
+      {pageBlock._type === "video" && (
+        <div className="block blockitem">
+          <h1>{pageBlock.title}</h1>
+          <Video url={pageBlock.url} cover={pageBlock.cover} />
+          <div>
+            <BlockContent blocks={pageBlock.description} />
+          </div>
         </div>
       )}
-      {pageBlock._type === "video" && <Video videoContent={pageBlock} />}
     </>
   );
 }
@@ -165,7 +181,7 @@ export default function PageBuilder({
   return (
     <div>
       {pageBuilder.map((page, index) => (
-        <div key={index} className="block">
+        <div key={index}>
           {page._type === "pageBlock" ? (
             <PageBlockContainer
               pageBlock={page}

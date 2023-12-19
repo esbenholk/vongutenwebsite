@@ -4,7 +4,7 @@ import BlockContent from "./BlockContent";
 function BreadContent({ title, heading, content }) {
   return (
     <div className="flex-row projectdetails fold">
-      <div className="flex-column projectheadline">
+      <div className="flex-column projectheadline leftMargin">
         {heading ? (
           <BlockContent blocks={heading} />
         ) : title ? (

@@ -32,7 +32,9 @@ export default function Footer({ color, logo }) {
           }}
         ></div>
         <footer>
-          <Image image={logo} />
+          <div className="logo">
+            <Image image={logo} />
+          </div>
 
           <div className="flex-row align-right fold">
             {info.breadContent != null ? (

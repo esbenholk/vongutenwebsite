@@ -75,7 +75,7 @@ export default function Category({
       <select
         name="modeSelecting"
         id="modeSelecting"
-        className="custom-select"
+        className="custom-select menu_link "
         onChange={(evt) => {
           console.log("SETS MODE", evt.currentTarget.value);
           setMode(evt.currentTarget.value);

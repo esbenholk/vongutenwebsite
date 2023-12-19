@@ -10,15 +10,6 @@ function DBItem({
   updateVisitedLinks,
   visitedLinks,
 }) {
-  console.log(
-    "DBITEM",
-    year,
-    title,
-    url,
-    description,
-    updateVisitedLinks,
-    visitedLinks
-  );
   return (
     <div className="flex-row db_item">
       <div className="flex-row">

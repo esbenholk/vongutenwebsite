@@ -13,6 +13,9 @@ html {
 ::-webkit-scrollbar {
   display: none;
 }
+* {
+  margin: 0;
+}
 
 body {
   margin: 0;
@@ -37,11 +40,6 @@ body {
   }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 button {
   border-width: 0;
 }
@@ -52,7 +50,6 @@ button {
   /* align-items: center; */
 }
 .wrap {
-  max-width: 80%;
   flex-wrap: wrap;
 }
 .space-around {
@@ -64,6 +61,10 @@ button {
 .align-center {
   justify-content: center;
 }
+.justify-center {
+  justify-content: center;
+}
+
 .flex-column {
   flex-direction: column;
   display: flex;
@@ -79,14 +80,19 @@ footer img {
   max-height: 100%;
   object-fit: contain;
 }
-/* span {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-} */
+footer .logo {
+  max-width: 35%;
+}
+footer a {
+  text-decoration: none;
+}
 
 .introImage .flex-column {
   max-width: 45%;
+}
+
+.introImage img {
+  max-width: 100%;
 }
 
 .greeting div p {
@@ -96,20 +102,96 @@ footer img {
   font-weight: 300;
   line-height: 70px; /* 100% */
 }
-/* img {
-  transition: 0.15s opacity;
-}
-img[data-loaded="false"] {
-  opacity: 0;
-} */
+
 a,
 p {
   margin: 0;
   min-height: var(--font-size);
+  letter-spacing: 0em;
+  text-align: left;
+  white-space: normal;
+  color: var(--primary-color);
+  font-family: Helvetica Neue;
+  font-size: 30.7px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 38.4px; /* 125.081% */
+}
+.smallp p,
+.smallp {
+  color: var(--primary-color);
+  font-family: Helvetica Neue;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+}
+.minip p,
+.minip {
+  font-size: 15px;
+  line-height: normal;
 }
 
+a strong,
+p strong {
+  font-weight: 700;
+}
+
+h1 {
+  color: var(--primary-color);
+  font-family: Helvetica Neue;
+  font-size: 56px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 64px;
+}
+h1 strong {
+  font-weight: 700;
+}
+h2 {
+  color: var(--primary-color);
+  font-family: Helvetica Neue;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 52px;
+  margin: 5px 0 52px;
+}
+h2 strong {
+  font-weight: 700;
+}
 h3 {
-  margin: 0;
+  color: var(--primary-color);
+  font-family: Helvetica Neue;
+  font-size: 30.7px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 38.4px; /* 125.081% */
+}
+h3 strong {
+  font-weight: 700;
+}
+h4 {
+  color: var(--primary-color);
+  font-family: Helvetica Neue;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px; /* 112.5% */
+}
+h4 strong {
+  font-weight: 700;
+}
+h5 {
+  color: var(--primary-color);
+  font-family: Helvetica Neue;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px; /* 112.5% */
+}
+h5 strong {
+  font-weight: 700;
 }
 
 .standardButton {
@@ -174,26 +256,33 @@ select:focus {
 }
 #modeSelecting {
   position: fixed;
+  font-family: Helvetica Neue;
   top: 0;
   right: 0;
   appearance: none;
   display: block;
   margin: var(--margin-size);
-  z-index: 99999;
   text-align: right;
-  font: inherit;
-  font-size: var(--font-size);
-  color: var(--primary-color);
+  z-index: 99999;
+  color: #000;
+  font-size: 30.7px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 38.4px; /* 125.081% */
   text-decoration: none;
+  width: 210px;
 }
 
 #modeSelecting option {
+  text-align: right;
+  z-index: 99999;
   color: #000;
-  font-family: Times New Roman;
   font-size: 30.7px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 38.4px; /* 125.081% */
+  text-decoration: none;
+  background-color: grey;
 }
 .select-dropdown {
   position: absolute;
@@ -265,11 +354,11 @@ select:focus {
   display: block;
   margin: var(--margin-size);
   z-index: 99999;
-  text-align: left;
-  font: inherit;
-  font-size: var(--font-size);
-  color: var(--primary-color);
-  text-transform: uppercase;
+  color: #000;
+  font-size: 30.7px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 38.4px; /* 125.081% */
   text-decoration: none;
 }
 
@@ -338,16 +427,37 @@ select:focus {
 }
 .projectPage {
   padding: 55px 10px;
+  min-height: 100vh;
 }
+
+/* .block {
+  padding: var(--regPadding);
+} */
 .projectPage .blockitem {
-  padding: 92px 0px 0px;
+  padding: 92px 0px 92px;
 }
-.projectdetails .projectheadline {
-  min-width: 300px;
+.leftMargin {
+  min-width: 27%;
   padding-right: 50px;
 }
 .projectdetails .flex-column {
   max-width: 1100px;
+}
+.projectdetailslist {
+  width: 100%;
+  max-width: 1100px;
+}
+.projectdetailslist p,
+.projectdetailslist a {
+  color: #000;
+  font-family: Helvetica Neue;
+  font-size: 18.4px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 23px; /* 125% */
+}
+.projectdetailslist .flex-row .flex-column:is(:first-child) {
+  min-width: 450px;
 }
 .projects {
   padding-top: 38px;
@@ -394,19 +504,146 @@ footer p {
   padding-top: 15px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
   .db_item .description {
     display: none;
+  }
+
+  footer .logo {
+    max-width: 55%;
+  }
+  footer a,
+  footer p {
+    color: #000;
+    font-family: Times New Roman;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px; /* 120% */
+    text-transform: capitalize;
+    padding-top: 12px;
+  }
+
+  .leftMargin {
+    min-width: 15%;
+    padding-right: 50px;
+  }
+  .flex-row.fold {
+    flex-direction: column;
+    gap: var(--font-size);
+  }
+  .rowblock .flex-column {
+    align-items: center;
+  }
+
+  a,
+  p {
+    margin: 0;
+    min-height: var(--font-size);
+    letter-spacing: 0em;
+    text-align: left;
+    white-space: normal;
+    color: var(--primary-color);
+    font-family: Helvetica Neue;
+    font-size: 20.7px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 38.4px; /* 125.081% */
+  }
+  .smallp p,
+  .smallp {
+    color: var(--primary-color);
+    font-family: Helvetica Neue;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 120% */
+  }
+  .minip p,
+  .minip {
+    font-size: 12px;
+    line-height: normal;
+  }
+
+  a strong,
+  p strong {
+    font-weight: 700;
+  }
+
+  h1 {
+    color: var(--primary-color);
+    font-family: Helvetica Neue;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 64px;
+  }
+  h1 strong {
+    font-weight: 700;
+  }
+  h2 {
+    color: var(--primary-color);
+    font-family: Helvetica Neue;
+    font-size: 31px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 52px;
+    margin: 5px 0 52px;
+  }
+  h2 strong {
+    font-weight: 700;
+  }
+  h3 {
+    color: var(--primary-color);
+    font-family: Helvetica Neue;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 38.4px; /* 125.081% */
+  }
+  h3 strong {
+    font-weight: 700;
+  }
+  h4 {
+    color: var(--primary-color);
+    font-family: Helvetica Neue;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 36px; /* 112.5% */
+  }
+  h4 strong {
+    font-weight: 700;
+  }
+  h5 {
+    color: var(--primary-color);
+    font-family: Helvetica Neue;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 36px; /* 112.5% */
+  }
+  h5 strong {
+    font-weight: 700;
+  }
+
+  footer .flex-column.flex-column:is(:first-child) {
+    padding-left: 0px;
+  }
+
+  .introImage .flex-column {
+    max-width: 100%;
   }
 }
 @media only screen and (max-width: 600px) {
   :root {
     --regPadding: 1rem;
   }
-  .flex-row.fold {
-    flex-direction: column;
-    gap: var(--font-size);
+  .leftMargin {
+    min-width: none;
+    padding-right: 0px;
   }
+
   .flex-row.centerOnMobile {
     justify-content: space-between;
   }
@@ -415,7 +652,7 @@ footer p {
   }
 
   footer {
-    padding: 15px 40px 100px;
+    padding: 15px 34px 100px 34px;
   }
   footer .flex-column {
     padding-left: 0px;
@@ -447,6 +684,21 @@ footer p {
 
   .instagramStyle {
     padding: 30px 10px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .db_item a,
+  .db_item p {
+    color: #000;
+    font-family: Banana Grotesk;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 17px; /* 124.829% */
+  }
+  .db_item .year {
+    width: 150px;
   }
 }
 a.visited:after {

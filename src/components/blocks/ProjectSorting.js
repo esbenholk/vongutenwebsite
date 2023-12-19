@@ -8,7 +8,7 @@ import AppContext from "../../globalState.js";
 
 import DBItem from "./db_item.js";
 
-import SquareCard from "./squareCard.js";
+import { SquareCard } from "./squareCard.js";
 
 export default function Projects({
   projectList,
@@ -35,21 +35,44 @@ export default function Projects({
   const [currentYears, setCurrentYears] = useState([]);
 
   useEffect(() => {
-    console.log("project list", projectList);
-    setAllPosts(projectList);
-    setSortedPosts(projectList);
-
     var tags = [];
     var tagNames = [];
     var categories = [];
     var categoryNames = [];
     var years = [];
+    var collaborators = [];
 
-    for (let index = 0; index < projectList.length; index++) {
-      const post = projectList[index];
+    // const tempCategories = [...currentCategories];
+
+    var tempProjectList;
+
+    if (!projectList) {
+      setAllPosts(myContext.projectList);
+      setSortedPosts(myContext.projectList);
+      console.log("finds all projects", myContext);
+      tempProjectList = myContext.projectList;
+    } else {
+      setAllPosts(projectList);
+      setSortedPosts(projectList);
+      tempProjectList = projectList;
+    }
+
+    console.log("project list", tempProjectList);
+
+    for (let index = 0; index < tempProjectList.length; index++) {
+      const post = tempProjectList[index];
       post.value = 0;
 
       years.push(post.year);
+
+      if (post.collaborators != null && Array.isArray(post.collaborators)) {
+        for (let index = 0; index < post.collaborators.length; index++) {
+          const collaborator = post.collaborators[index];
+          if (!collaborators.includes(collaborator.title)) {
+            collaborators.push(collaborator.title);
+          }
+        }
+      }
 
       if (post.tags != null && Array.isArray(post.tags)) {
         for (let index = 0; index < post.tags.length; index++) {
@@ -57,15 +80,6 @@ export default function Projects({
           if (!tagNames.includes(tag)) {
             tagNames.push(tag);
             tags.push(tag);
-            if (highlightedTag === tag) {
-              const tempTags = [...currentTags];
-              tempTags.push(tag);
-              setCurrentTags(tempTags);
-              let button = document.getElementById("tag_" + tag);
-              if (button) {
-                button.classList.add("active");
-              }
-            }
           }
         }
       }
@@ -87,10 +101,11 @@ export default function Projects({
 
     let sortedCategories = [...new Set(categories)];
     setCategories(sortedCategories);
+    //
 
     let sortedYears = [...new Set(years)];
     setYears(sortedYears);
-  }, [projectList, currentTags, highlightedTag]);
+  }, [projectList, currentTags, myContext, currentCategories]);
 
   useEffect(() => {
     if (
@@ -99,12 +114,13 @@ export default function Projects({
       currentYears.length > 0
     ) {
       const tempSortedPosts = [];
+
       console.log(
         "search criteria has been updated",
-        currentTags
-        // currentCategories,
-        // currentYears,
-        // allPosts
+        currentTags,
+        currentCategories,
+        currentYears,
+        allPosts
       );
 
       ///loop through all posts
@@ -138,9 +154,9 @@ export default function Projects({
             }
           }
         }
+
         if (currentYears.includes(post.year.toString())) {
           post_score = post_score + 3;
-          console.log("HAS PROJECT FOR ZEAR", post);
         }
 
         if (post_score > 0) {
@@ -153,8 +169,56 @@ export default function Projects({
       setSortedPosts(tempSortedPosts);
     } else {
       setSortedPosts(allPosts);
+
+      console.log(
+        "search is empty",
+        currentTags,
+        currentCategories,
+        currentYears,
+        allPosts
+      );
     }
   }, [currentTags, allPosts, currentCategories, currentYears]);
+
+  useEffect(() => {
+    if (allPosts) {
+      for (let index = 0; index < allPosts.length; index++) {
+        const post = allPosts[index];
+        post.value = 0;
+        if (post.tags != null && Array.isArray(post.tags)) {
+          const tempTags = [];
+
+          for (let index = 0; index < post.tags.length; index++) {
+            const tag = post.tags[index];
+            if (highlightedTag === tag) {
+              tempTags.push(tag);
+              setCurrentTags(tempTags);
+              let button = document.getElementById("tag_" + tag);
+              if (button) {
+                button.classList.add("active");
+              }
+            }
+          }
+        }
+
+        if (post.categories != null && Array.isArray(post.categories)) {
+          const tempCategories = [];
+          for (let index = 0; index < post.categories.length; index++) {
+            const category = post.categories[index];
+
+            if (highlightedTag === category.slug.current) {
+              tempCategories.push(category.title);
+              setCurrentCategories(tempCategories);
+              let button = document.getElementById("category_" + category);
+              if (button) {
+                button.classList.add("active");
+              }
+            }
+          }
+        }
+      }
+    }
+  }, [allPosts, highlightedTag]);
 
   function setTag(_tag) {
     let tag;
@@ -253,7 +317,11 @@ export default function Projects({
           {categories &&
             categories.map((category, index) => (
               <button
-                className="sortingButton"
+                className={
+                  currentCategories.includes(category.title)
+                    ? "sortingButton active"
+                    : "sortingButton"
+                }
                 key={index}
                 id={"category_" + category.title + ""}
                 onClick={(evt) => {
@@ -298,7 +366,11 @@ export default function Projects({
           <>
             {tags.map((tag, index) => (
               <button
-                className="sortingButton"
+                className={
+                  currentTags.includes(tag)
+                    ? "sortingButton active"
+                    : "sortingButton"
+                }
                 key={index}
                 id={"tag_" + tag + ""}
                 onClick={() => {

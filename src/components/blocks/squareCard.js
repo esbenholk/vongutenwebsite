@@ -3,14 +3,14 @@ import sanityClient from "../../client";
 import { Link } from "react-router-dom";
 
 import imageUrlBuilder from "@sanity/image-url";
-// Get a pre-configured url-builder from your sanity client
+import Image from "./image";
 const builder = imageUrlBuilder(sanityClient);
 
 function urlFor(source) {
   return builder.image(source);
 }
 
-export default function SquareCard({ post, class_name, width }) {
+export function SquareCard({ post, class_name, width }) {
   return (
     <div className="cube_card">
       {post.mainImage && (
@@ -30,6 +30,14 @@ export default function SquareCard({ post, class_name, width }) {
           />
         </Link>
       )}
+    </div>
+  );
+}
+
+export function SquareImage({ image, class_name, width }) {
+  return (
+    <div className="cubedImage">
+      <Image image={image} width={width} class={class_name} cubed={true} />
     </div>
   );
 }
