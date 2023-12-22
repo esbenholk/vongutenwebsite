@@ -11,7 +11,7 @@ function BreadContent({ title, heading, content }) {
           <h1>{title}</h1>
         ) : null}
       </div>
-      <div className="flex-column">
+      <div className="flex-column centered">
         {content && <BlockContent blocks={content} />}
       </div>
     </div>

@@ -49,7 +49,7 @@ export default function SinglePage({
             //   description={singlePost.recap[0].children[0].text}
             // image={singlePage.mainImage.asset.url}
           />
-          <div style={{ minHeight: "100vh" }}>
+          <div className="projectPage page">
             {singlePage.pageBuilder && (
               <PageBuilder
                 pageBuilder={singlePage.pageBuilder}

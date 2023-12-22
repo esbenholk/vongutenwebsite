@@ -23,7 +23,7 @@ function DBItem({
         {url && !url.includes("http") ? (
           <Link
             className={`title ${
-              visitedLinks.includes(url) ? "visited" : "new"
+              visitedLinks && visitedLinks.includes(url) ? "visited" : "new"
             }`}
             to={"/" + url}
             onClick={() => {
@@ -38,7 +38,7 @@ function DBItem({
             {" "}
             <a
               className={`title ${
-                visitedLinks.includes(title) ? "visited" : "new"
+                visitedLinks && visitedLinks.includes(title) ? "visited" : "new"
               }`}
               href={url}
               target="_blank"

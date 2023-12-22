@@ -11,14 +11,17 @@ export default function LandingPage({
   updateVisitedLinks,
   visitedLinks,
   updateSiteColor,
+  updateShouldToggleMode,
 }) {
   const myContext = useContext(AppContext);
   const info = myContext.siteSettings;
   const [isImage1, setIsImage1] = useState(true);
   const { slug } = useParams();
   useEffect(() => {
+    updateShouldToggleMode(false);
+
     updateSiteColor(info.color);
-  }, [slug, info.color, updateSiteColor]);
+  }, [slug, info.color, updateSiteColor, updateShouldToggleMode]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -52,6 +55,7 @@ export default function LandingPage({
       {info.pageBuilder && <PageBuilder pageBuilder={info.pageBuilder} />}
       <div className="flex-column">
         <Projects
+          isproject={true}
           updateVisitedLinks={updateVisitedLinks}
           visitedLinks={visitedLinks}
           projectList={myContext.projectList}

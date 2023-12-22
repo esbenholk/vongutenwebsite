@@ -83,7 +83,7 @@ function App() {
   useEffect(() => {
     sanityClient
       .fetch(
-        ' *[_type == "project"]{ title, year, time, mainImage, slug, description, tags, categories[]->{title, slug}}'
+        ' *[_type == "project"]{ title, year, time, mainImage, heroImage, featuredImage, slug, description, tags, categories[]->{title, slug}}'
       )
       .then((data) => {
         data.sort((a, b) => b.year - a.year);
@@ -139,7 +139,6 @@ function App() {
           <Suspense fallback={<Loader color1={colorCode} color2="white" />}>
             <AppContext.Provider value={globalContext}>
               <BrowserRouter>
-                <Header color={colorCode} shouldToggleMode={shouldToggleMode} />
                 <AnimatePresence>
                   <motion.div
                     className="mainContainer"
@@ -157,6 +156,7 @@ function App() {
                             updateVisitedLinks={updateVisitedLinks}
                             visitedLinks={visitedLinks}
                             updateSiteColor={updateSiteColor}
+                            updateShouldToggleMode={updateShouldToggleMode}
                           />
                         }
                       ></Route>
@@ -179,6 +179,7 @@ function App() {
                     </Routes>
                   </motion.div>
                 </AnimatePresence>
+                <Header color={colorCode} shouldToggleMode={shouldToggleMode} />
                 <Footer
                   color={colorCode}
                   // visitedLinks={visitedLinks}

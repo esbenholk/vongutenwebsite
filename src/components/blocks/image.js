@@ -106,3 +106,35 @@ export function ConstrainedImage(props) {
     </>
   );
 }
+
+export function HeroMobileImage(props) {
+  const image = props.image;
+  const classs = props.class;
+  const onLoad = props.onLoad;
+
+  return (
+    <>
+      {image && (
+        <LazyLoadImage
+          loading="lazy"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          src={urlFor(image.asset).height(628).url()}
+          placeholdersrc={urlFor(image.asset).height(2).url()}
+          key={image.asset._ref}
+          alt={image.alt}
+          style={{
+            objectPosition: image.hotspot
+              ? `${image.hotspot.x * 100}% ${image.hotspot.y * 100}%`
+              : "50% 50%",
+            height: "628px",
+            // maxWidth: width ? width : "100%",
+          }}
+          className={classs}
+          effect="opacity"
+        />
+      )}
+    </>
+  );
+}

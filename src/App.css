@@ -15,13 +15,12 @@ html {
 }
 * {
   margin: 0;
+  font-family: Times New Roman;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--secondary-color);
@@ -55,6 +54,9 @@ button {
 .space-around {
   justify-content: space-around;
 }
+.space-between {
+  justify-content: space-around;
+}
 .align-right {
   justify-content: flex-end;
 }
@@ -63,6 +65,9 @@ button {
 }
 .justify-center {
   justify-content: center;
+}
+.fullwidth {
+  width: 100%;
 }
 
 .flex-column {
@@ -111,7 +116,7 @@ p {
   text-align: left;
   white-space: normal;
   color: var(--primary-color);
-  font-family: Helvetica Neue;
+
   font-size: 30.7px;
   font-style: normal;
   font-weight: 300;
@@ -120,7 +125,7 @@ p {
 .smallp p,
 .smallp {
   color: var(--primary-color);
-  font-family: Helvetica Neue;
+
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -139,7 +144,7 @@ p strong {
 
 h1 {
   color: var(--primary-color);
-  font-family: Helvetica Neue;
+
   font-size: 56px;
   font-style: normal;
   font-weight: 400;
@@ -150,7 +155,7 @@ h1 strong {
 }
 h2 {
   color: var(--primary-color);
-  font-family: Helvetica Neue;
+
   font-size: 48px;
   font-style: normal;
   font-weight: 400;
@@ -162,7 +167,7 @@ h2 strong {
 }
 h3 {
   color: var(--primary-color);
-  font-family: Helvetica Neue;
+
   font-size: 30.7px;
   font-style: normal;
   font-weight: 500;
@@ -173,7 +178,7 @@ h3 strong {
 }
 h4 {
   color: var(--primary-color);
-  font-family: Helvetica Neue;
+
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -184,7 +189,7 @@ h4 strong {
 }
 h5 {
   color: var(--primary-color);
-  font-family: Helvetica Neue;
+
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -192,6 +197,19 @@ h5 {
 }
 h5 strong {
   font-weight: 700;
+}
+
+.minimisedtext p,
+.minimisedtext a {
+  font-size: 18.4px;
+  line-height: 23px;
+}
+
+/* .heading {
+  margin-top: 50px;
+} */
+.headline {
+  margin-bottom: 50px;
 }
 
 .standardButton {
@@ -219,7 +237,6 @@ h5 strong {
 
 .sortingButton {
   color: #1616f8;
-  font-family: Banana Grotesk;
   font-size: 30.7px;
   font-style: normal;
   font-weight: 300;
@@ -229,7 +246,6 @@ h5 strong {
 .sortingButton.active {
   color: purple;
 
-  font-family: Banana Grotesk;
   font-size: 30.7px;
   font-style: italic;
   text-decoration: line-through;
@@ -241,7 +257,6 @@ select {
   background-color: transparent;
   border: none;
   color: #1616f8;
-  font-family: Banana Grotesk;
   font-size: 30.7px;
   font-style: normal;
   font-weight: 300;
@@ -256,7 +271,7 @@ select:focus {
 }
 #modeSelecting {
   position: fixed;
-  font-family: Helvetica Neue;
+
   top: 0;
   right: 0;
   appearance: none;
@@ -325,18 +340,25 @@ select:focus {
 }
 
 .instagramStyle {
-  padding: 50px 6rem;
+  padding: 50px 6rem 92px 6rem;
   max-width: 1650px;
 }
+
+.cubedImage,
 .cube_card {
-  max-height: 550px;
+  /* max-height: 550px; */
   max-width: 550px;
   margin: 3px 5px;
 }
+.cubedImage img,
 .cube_card img {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
+}
+
+.rowGallery .cubedImage {
+  max-width: 47%;
 }
 
 .block img {
@@ -346,6 +368,15 @@ select:focus {
 }
 
 /* ////////MENU HEADER/////////// */
+
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999999;
+}
 .menu {
   justify-content: space-between;
   /* padding: var(--margin-size); */
@@ -372,6 +403,7 @@ select:focus {
 .hero {
   position: relative;
   width: 100%;
+  min-height: 528px;
 }
 .hero span,
 .hero span img {
@@ -407,7 +439,6 @@ select:focus {
 }
 .db_item a,
 .db_item p {
-  font-family: Banana Grotesk;
   font-size: 30.7px;
   font-style: normal;
   font-weight: 300;
@@ -415,42 +446,66 @@ select:focus {
   white-space: nowrap;
 }
 
-.tagButtons,
-.list {
-  padding: 10px;
+.tagButtons {
+  padding: 10px 0 10px 0;
 }
 .list {
   overflow-x: hidden;
+  padding: 10px;
+}
+.tagButtons {
+  padding-left: 10px;
 }
 .tag {
   padding-right: 5px;
 }
+
 .projectPage {
-  padding: 55px 10px;
+  padding: 82px 0px 82px 0;
   min-height: 100vh;
+  z-index: 0;
 }
 
-/* .block {
-  padding: var(--regPadding);
-} */
-.projectPage .blockitem {
-  padding: 92px 0px 92px;
+.block {
+  padding: 10px;
 }
+.projectPage .blockitem {
+  margin: 10px;
+}
+
+.blockitem .ressourcelist {
+  padding: 0;
+}
+.singlePost .blockitem,
+.ressourcelist {
+  padding-bottom: 92px;
+}
+
 .leftMargin {
-  min-width: 27%;
-  padding-right: 50px;
+  min-width: 400px;
+  width: 400px;
+  max-width: 400px;
+  padding-right: 70px;
+}
+.centered {
+  width: 900px;
+}
+
+.projectDetailsListicle {
+  padding-top: 92px;
+  padding-bottom: 92px;
 }
 .projectdetails .flex-column {
-  max-width: 1100px;
+  max-width: 900px;
 }
 .projectdetailslist {
   width: 100%;
-  max-width: 1100px;
+  max-width: 900px;
 }
 .projectdetailslist p,
 .projectdetailslist a {
   color: #000;
-  font-family: Helvetica Neue;
+
   font-size: 18.4px;
   font-style: normal;
   font-weight: 300;
@@ -459,15 +514,13 @@ select:focus {
 .projectdetailslist .flex-row .flex-column:is(:first-child) {
   min-width: 450px;
 }
-.projects {
-  padding-top: 38px;
-}
+
 .connectedProjects {
-  padding: 0 0 59px 0;
+  padding: 0 0 20px 0;
   overflow-x: scroll;
   white-space: nowrap;
   display: flex;
-  gap: 59px;
+
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar {
     display: none;
@@ -479,6 +532,27 @@ select:focus {
   display: flex;
   flex-direction: column;
   height: 511px;
+}
+.post_card_overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: all 0.1s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.post_card_overlay div,
+.post_card_overlay p {
+  pointer-events: none;
+}
+.post_card_overlay.active {
+  opacity: 1;
 }
 .post_card span,
 .post_card img {
@@ -495,7 +569,6 @@ footer .flex-column {
 footer a,
 footer p {
   color: #000;
-  font-family: Times New Roman;
   font-size: 25px;
   font-style: normal;
   font-weight: 400;
@@ -504,9 +577,83 @@ footer p {
   padding-top: 15px;
 }
 
+.rowblock:has(.textContent):is(:last-child) {
+  margin-left: 80px;
+}
+.rowblock:has(.textContent):is(:first-child) {
+  margin-right: 80px;
+}
+.blockitem span,
+.blockitem img,
+.rowblock span,
+.rowblock span img {
+  max-width: 100% !important;
+  margin-bottom: 3px;
+}
+
+.gap {
+  gap: 10px;
+}
+.page .textBlock,
+.page .heading {
+  padding: 10px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .leftMargin {
+    min-width: 350px;
+    width: 350px;
+    max-width: 350px;
+    padding-right: 50px;
+  }
+  .centered {
+    width: 700px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .leftMargin {
+    min-width: 250px;
+    width: 250px;
+    max-width: 250px;
+    padding-right: 50px;
+  }
+  .centered {
+    width: 700px;
+  }
+
+  .projectdetailslist .flex-row .flex-column:is(:first-child) {
+    min-width: 200px;
+    padding-right: 20px;
+  }
+}
 @media only screen and (max-width: 900px) {
   .db_item .description {
     display: none;
+  }
+  .centered {
+    width: 100%;
+  }
+
+  .rowblock:has(.textContent):is(:last-child) {
+    margin-left: 10px;
+  }
+  .rowblock:has(.textContent):is(:first-child) {
+    margin-right: 10px;
+  }
+  .fold .rowblock:has(.textContent):is(:last-child) {
+    margin-left: 0px;
+  }
+  .fold .rowblock:has(.textContent):is(:first-child) {
+    margin-right: 0px;
+  }
+
+  .rowblock:has(.rowGallery) {
+    min-width: 50%;
+  }
+
+  .fold {
+    gap: 40px;
   }
 
   footer .logo {
@@ -515,7 +662,6 @@ footer p {
   footer a,
   footer p {
     color: #000;
-    font-family: Times New Roman;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -532,8 +678,21 @@ footer p {
     flex-direction: column;
     gap: var(--font-size);
   }
+  .projectdetailslist .flex-row .flex-column:is(:first-child) {
+    min-width: 0;
+  }
   .rowblock .flex-column {
     align-items: center;
+  }
+  .blockitem span,
+  .blockitem img,
+  .rowblock span,
+  .rowblock span img {
+    max-width: 100% !important;
+  }
+  .cubedImage,
+  .cube_card {
+    margin: 1px 2px;
   }
 
   a,
@@ -544,7 +703,7 @@ footer p {
     text-align: left;
     white-space: normal;
     color: var(--primary-color);
-    font-family: Helvetica Neue;
+
     font-size: 20.7px;
     font-style: normal;
     font-weight: 300;
@@ -553,7 +712,7 @@ footer p {
   .smallp p,
   .smallp {
     color: var(--primary-color);
-    font-family: Helvetica Neue;
+
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -572,7 +731,7 @@ footer p {
 
   h1 {
     color: var(--primary-color);
-    font-family: Helvetica Neue;
+
     font-size: 42px;
     font-style: normal;
     font-weight: 400;
@@ -581,9 +740,10 @@ footer p {
   h1 strong {
     font-weight: 700;
   }
+
   h2 {
     color: var(--primary-color);
-    font-family: Helvetica Neue;
+
     font-size: 31px;
     font-style: normal;
     font-weight: 400;
@@ -595,7 +755,7 @@ footer p {
   }
   h3 {
     color: var(--primary-color);
-    font-family: Helvetica Neue;
+
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -606,7 +766,7 @@ footer p {
   }
   h4 {
     color: var(--primary-color);
-    font-family: Helvetica Neue;
+
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -617,7 +777,7 @@ footer p {
   }
   h5 {
     color: var(--primary-color);
-    font-family: Helvetica Neue;
+
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -625,6 +785,11 @@ footer p {
   }
   h5 strong {
     font-weight: 700;
+  }
+
+  .minimisedtext p,
+  .minimisedtext a {
+    font-size: 12.3px;
   }
 
   footer .flex-column.flex-column:is(:first-child) {
@@ -643,13 +808,19 @@ footer p {
     min-width: none;
     padding-right: 0px;
   }
-
+  .rowGallery .cubedImage {
+    max-width: 100%;
+  }
   .flex-row.centerOnMobile {
     justify-content: space-between;
   }
   .introImage .flex-column {
     max-width: 100%;
   }
+
+  /* .rowblock:has(.textContent) {
+    min-width: 50%;
+  } */
 
   footer {
     padding: 15px 34px 100px 34px;
@@ -663,14 +834,16 @@ footer p {
   .db_item a,
   .db_item p {
     color: #000;
-    font-family: Banana Grotesk;
     font-size: 20.5px;
     font-style: normal;
     font-weight: 300;
     line-height: 25.59px; /* 124.829% */
   }
   .db_item .year {
-    width: 200px;
+    width: 180px;
+  }
+  .ressourcelist .year {
+    width: 120px;
   }
 
   .menu_link {
@@ -691,7 +864,6 @@ footer p {
   .db_item a,
   .db_item p {
     color: #000;
-    font-family: Banana Grotesk;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;

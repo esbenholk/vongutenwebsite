@@ -31,7 +31,7 @@ export default function Category({
           title,
           slug,
           color,
-          connectedProjects{_type, heading,type, projects[]->{title, year, time, place, slug, logoImage, mainImage, heroImage}}
+          connectedProjects{_type, heading,type, projects[]->{title, year, time, place, slug, mainImage, heroImage, featuredImage}}
         }`
       )
       .then((data) => {
@@ -88,19 +88,40 @@ export default function Category({
         <option value={"fullpage"}>FullPage Mode</option>
         <option value={"grid"}>Grid Mode</option>
       </select>
-      {mode === "list" ? (
-        <>
-          {" "}
-          {category && category.connectedProjects ? (
-            <>
-              {" "}
-              <ConnectedProjects
-                projects={category.connectedProjects.projects}
-                heading={category.connectedProjects.heading}
-                type={category.connectedProjects.type}
-              />
-            </>
-          ) : null}
+
+      <div className="projectPage ">
+        {mode === "list" ? (
+          <>
+            {" "}
+            {category && category.connectedProjects ? (
+              <>
+                {" "}
+                <ConnectedProjects
+                  projects={category.connectedProjects.projects}
+                  heading={category.connectedProjects.heading}
+                  type={category.connectedProjects.type}
+                />
+              </>
+            ) : null}
+            <div>
+              {sortedProjectList.length > 0 && (
+                <div className="content-container ">
+                  <Projects
+                    updateVisitedLinks={updateVisitedLinks}
+                    visitedLinks={visitedLinks}
+                    projectList={sortedProjectList}
+                    displayCategoryButton={false}
+                    displayTagButton={true}
+                    displayStyle="list"
+                    displayYearButton={true}
+                    highlightedTag={searchSlug ? searchSlug[0] : null}
+                    isproject={true}
+                  />
+                </div>
+              )}
+            </div>
+          </>
+        ) : mode === "grid" ? (
           <div>
             {sortedProjectList.length > 0 && (
               <div className="content-container ">
@@ -110,49 +131,34 @@ export default function Category({
                   projectList={sortedProjectList}
                   displayCategoryButton={false}
                   displayTagButton={true}
-                  displayStyle="list"
+                  displayStyle="grid"
+                  displayYearButton={true}
+                  isproject={true}
+                  highlightedTag={searchSlug ? searchSlug[0] : null}
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            {sortedProjectList.length > 0 && (
+              <div className="content-container ">
+                <Projects
+                  isproject={true}
+                  updateVisitedLinks={updateVisitedLinks}
+                  visitedLinks={visitedLinks}
+                  projectList={sortedProjectList}
+                  displayCategoryButton={false}
+                  displayTagButton={true}
+                  displayStyle="fullpage"
                   displayYearButton={true}
                   highlightedTag={searchSlug ? searchSlug[0] : null}
                 />
               </div>
             )}
           </div>
-        </>
-      ) : mode === "grid" ? (
-        <div>
-          {sortedProjectList.length > 0 && (
-            <div className="content-container ">
-              <Projects
-                updateVisitedLinks={updateVisitedLinks}
-                visitedLinks={visitedLinks}
-                projectList={sortedProjectList}
-                displayCategoryButton={false}
-                displayTagButton={true}
-                displayStyle="grid"
-                displayYearButton={true}
-                highlightedTag={searchSlug ? searchSlug[0] : null}
-              />
-            </div>
-          )}
-        </div>
-      ) : (
-        <div>
-          {sortedProjectList.length > 0 && (
-            <div className="content-container ">
-              <Projects
-                updateVisitedLinks={updateVisitedLinks}
-                visitedLinks={visitedLinks}
-                projectList={sortedProjectList}
-                displayCategoryButton={false}
-                displayTagButton={true}
-                displayStyle="fullpage"
-                displayYearButton={true}
-                highlightedTag={searchSlug ? searchSlug[0] : null}
-              />
-            </div>
-          )}
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 }

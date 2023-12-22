@@ -27,7 +27,7 @@ export default function Footer({ color, logo }) {
             bottom: "100%",
             minHeight: "300px",
             width: "100%",
-            backgroundImage: `linear-gradient( to top, ${color} 10%, rgba(246,246,246,0) )`,
+            backgroundImage: `linear-gradient( to top, ${color} 30%, rgba(246,246,246,0) )`,
             pointerEvents: "none",
           }}
         ></div>

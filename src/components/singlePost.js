@@ -55,18 +55,20 @@ export default function SinglePost({
             description={project.description}
             image={project.mainImage.asset.url}
           />
-          <div className="projectPage">
-            <BreadContent
-              content={
-                project.fulldescription && project.fulldescription.content
-              }
-              heading={project.headline && project.headline.content}
-              title={project.title}
-            />
-            <div className="flex-row projectdetails fold">
+          <div className="projectPage singlePost">
+            <div className="block">
+              <BreadContent
+                content={
+                  project.fulldescription && project.fulldescription.content
+                }
+                heading={project.headline && project.headline.content}
+                title={project.title}
+              />
+            </div>
+            <div className="flex-row projectdetails projectDetailsListicle fold block">
               <div className="leftMargin"></div>
-              <div className="flex-column projectdetailslist">
-                <div className="flex-row blockitem fold">
+              <div className="flex-column projectdetailslist centered">
+                <div className="flex-row fold">
                   <div className="flex-column">
                     {project.time ? (
                       <div className="flex-column">
@@ -167,6 +169,7 @@ export default function SinglePost({
           </div>
           <div className="flex-column">
             <Projects
+              isproject={true}
               updateVisitedLinks={updateVisitedLinks}
               visitedLinks={visitedLinks}
               projectList={myContext.projectList}

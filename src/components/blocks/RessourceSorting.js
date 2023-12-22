@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import Masonry from "react-responsive-masonry";
-import { SquareCard } from "./squareCard.js";
+
 import HeroProjectGrid from "./hero.js";
 
 import AppContext from "../../globalState.js";
 
 import DBItem from "./db_item.js";
 
-export default function Projects({
+import { SquareCard } from "./squareCard.js";
+
+export default function Ressources({
   projectList,
   displayCategoryButton,
   displayTagButton,
@@ -17,10 +19,8 @@ export default function Projects({
   displayStyle,
   displayYearButton,
   highlightedTag,
-  isproject,
 }) {
   const myContext = useContext(AppContext);
-  const info = myContext.siteSettings;
   const [allPosts, setAllPosts] = useState(projectList);
 
   const [sortedPosts, setSortedPosts] = useState(null);
@@ -32,6 +32,8 @@ export default function Projects({
   const [currentCategories, setCurrentCategories] = useState([]);
   const [years, setYears] = useState([]);
   const [currentYears, setCurrentYears] = useState([]);
+
+  console.log("RESSOURCESORTING TAKES ARRAY", projectList);
 
   useEffect(() => {
     var tags = [];
@@ -407,7 +409,7 @@ export default function Projects({
                   <HeroProjectGrid
                     key={index}
                     image={post.heroImage ? post.heroImage : post.mainImage}
-                    url={post.slug.current}
+                    // url={post.slug.current}
                     updateVisitedLinks={updateVisitedLinks}
                   />
                 ))}
@@ -417,33 +419,14 @@ export default function Projects({
       )}
 
       {displayStyle === "list" && (
-        <div className="list">
+        <div className="list ressourcelist">
           {sortedPosts
             ? sortedPosts.map((project, index) => (
                 <DBItem
                   key={index}
-                  url={
-                    project.slug
-                      ? project.slug.current
-                      : project.link
-                      ? project.link
-                      : "/"
-                  }
-                  title={project.title}
-                  year={project.time ? project.time : project.year}
-                  description={project.description}
-                  updateVisitedLinks={updateVisitedLinks}
-                  visitedLinks={visitedLinks}
-                />
-              ))
-            : null}
-          {isproject && info.comingProjects
-            ? info.comingProjects.map((project, index) => (
-                <DBItem
-                  key={index}
                   url={project.link}
                   title={project.title}
-                  year={project.year}
+                  year={project.time ? project.time : project.year}
                   description={project.description}
                   updateVisitedLinks={updateVisitedLinks}
                   visitedLinks={visitedLinks}
