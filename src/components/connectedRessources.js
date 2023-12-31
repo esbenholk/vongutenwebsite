@@ -27,11 +27,6 @@ function ConnectedRessources({
           .then((data) => {
             data.sort((a, b) => b.year - a.year);
 
-            console.log(
-              "has category tag",
-              data[0].ressource.length,
-              connectedRessources
-            );
             if (data && data[0].ressource && data[0].ressource.length > 0) {
               for (let index = 0; index < data[0].ressource.length; index++) {
                 const ressource = data[0].ressource[index];
@@ -66,7 +61,7 @@ function ConnectedRessources({
         })
         .catch(console.error);
     }
-  }, [categories, ressources, connectedRessources]);
+  }, [categories, ressources]);
 
   useEffect(() => {}, [categories, ressources]);
 

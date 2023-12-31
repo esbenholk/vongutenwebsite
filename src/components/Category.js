@@ -38,7 +38,9 @@ export default function Category({
         setCategory(data[0]);
         console.log("CATEGORY PAGE", data[0]);
 
-        updateSiteColor(data[0].color);
+        if (data[0]) {
+          updateSiteColor(data[0].color);
+        }
       })
       .catch(console.error);
 

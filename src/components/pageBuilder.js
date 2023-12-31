@@ -67,12 +67,14 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
         />
       )}
       {pageBlock._type === "expandedBreadContent" && (
-        <>{pageBlock.content && <BlockContent blocks={pageBlock.content} />}</>
+        <div className="block">
+          {pageBlock.content && <BlockContent blocks={pageBlock.content} />}
+        </div>
       )}
       {pageBlock._type === "breadContent" && (
         <>
           {pageBlock.content && (
-            <div className="textBlock">
+            <div className="textBlock block">
               <BlockContent blocks={pageBlock.content} />
             </div>
           )}
@@ -93,7 +95,7 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
       )}
       {pageBlock._type === "row" && (
         <div
-          className={`flex-row gap  ${pageBlock.fold && "fold"}`}
+          className={`flex-row block gap  ${pageBlock.fold && "fold"}`}
           style={{ maxWidth: "100%" }}
         >
           {pageBlock.rowContent.map((rowBlock, index) => (
@@ -163,13 +165,13 @@ function PageBlockContainer({ pageBlock, updateVisitedLinks, visitedLinks }) {
       {pageBlock.type === "fullwidth" ? (
         <div className="fullwidthblockitem">
           {pageBlock._type !== "hero" && pageBlock.title ? (
-            <div className="headline">
+            <div className="headline block">
               <BlockContent blocks={pageBlock.title} />
             </div>
           ) : null}
           {pageBlock.pageBuilder &&
             pageBlock.pageBuilder.map((page, index) => (
-              <div key={index}>
+              <div key={index} className="block">
                 <PageBlock
                   pageBlock={page}
                   updateVisitedLinks={updateVisitedLinks}
@@ -191,7 +193,7 @@ function PageBlockContainer({ pageBlock, updateVisitedLinks, visitedLinks }) {
             <div className="flex-column centered">
               {pageBlock.pageBuilder &&
                 pageBlock.pageBuilder.map((page, index) => (
-                  <div key={index}>
+                  <div key={index} className="block">
                     <PageBlock
                       pageBlock={page}
                       updateVisitedLinks={updateVisitedLinks}
