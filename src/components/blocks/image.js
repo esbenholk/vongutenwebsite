@@ -86,7 +86,7 @@ export function ConstrainedImage(props) {
               ? urlFor(image.asset).width(width).url()
               : urlFor(image.asset).url()
           }
-          onLoad={(e) => {
+          onLoad={() => {
             onLoad && onLoad(true);
           }}
           placeholdersrc={urlFor(image.asset).height(2).url()}
@@ -110,7 +110,6 @@ export function ConstrainedImage(props) {
 export function HeroMobileImage(props) {
   const image = props.image;
   const classs = props.class;
-  const onLoad = props.onLoad;
 
   return (
     <>

@@ -66,7 +66,7 @@ function ConnectedRessources({
         })
         .catch(console.error);
     }
-  }, [categories, ressources]);
+  }, [categories, ressources, connectedRessources]);
 
   useEffect(() => {}, [categories, ressources]);
 
