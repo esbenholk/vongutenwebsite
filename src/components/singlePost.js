@@ -109,10 +109,25 @@ export default function SinglePost({
                       <>
                         {" "}
                         <p>
-                          <strong>Categories</strong>
+                          <strong>Category</strong>
                         </p>
                         <div className="flex-row wrap">
-                          {project.categories &&
+                          <Link
+                            className={`tag ${
+                              visitedLinks.includes(project.categories[0].title)
+                                ? "visited"
+                                : "new"
+                            }`}
+                            to={"/" + project.categories[0].slug.current}
+                            onClick={(evt) => {
+                              updateVisitedLinks(
+                                project.categories[0].slug.current
+                              );
+                            }}
+                          >
+                            {project.categories[0].title}
+                          </Link>
+                          {/* {project.categories &&
                             project.categories.map((category, index) => (
                               <Link
                                 className={`tag ${
@@ -134,7 +149,7 @@ export default function SinglePost({
                                   ? ","
                                   : null}
                               </Link>
-                            ))}
+                            ))} */}
                           {project.tags &&
                             project.tags.map((tag, index) => (
                               <Link

@@ -11,7 +11,7 @@ function urlFor(source) {
   return builder.image(source);
 }
 
-export default function PostCard({ post, class_name }) {
+export default function PostCard({ post }) {
   const [isActive, setIsActive] = useState(false);
   return (
     <Link
@@ -31,37 +31,31 @@ export default function PostCard({ post, class_name }) {
         {post.time ? <BlockContent blocks={post.time} /> : <p>{post.year}</p>}
       </div>
       {post.featuredImage ? (
-        <>
-          {" "}
-          <img
-            src={urlFor(post.featuredImage).height(511).url()}
-            alt={post.featuredImage.alt}
-            style={{
-              objectPosition:
-                post.featuredImage.hotspot &&
-                `${post.featuredImage.hotspot.x * 100}% ${
-                  post.featuredImage.hotspot.y * 100
-                }%`,
-            }}
-            className={class_name}
-          />
-        </>
+        <img
+          className={isActive ? "img blur" : "img"}
+          src={urlFor(post.featuredImage).height(511).url()}
+          alt={post.featuredImage.alt}
+          style={{
+            objectPosition:
+              post.featuredImage.hotspot &&
+              `${post.featuredImage.hotspot.x * 100}% ${
+                post.featuredImage.hotspot.y * 100
+              }%`,
+          }}
+        />
       ) : (
-        <>
-          {" "}
-          <img
-            src={urlFor(post.mainImage).height(511).url()}
-            alt={post.mainImage.alt}
-            style={{
-              objectPosition:
-                post.mainImage.hotspot &&
-                `${post.mainImage.hotspot.x * 100}% ${
-                  post.mainImage.hotspot.y * 100
-                }%`,
-            }}
-            className={class_name}
-          />
-        </>
+        <img
+          className={isActive ? "img blur" : "img"}
+          src={urlFor(post.mainImage).height(511).url()}
+          alt={post.mainImage.alt}
+          style={{
+            objectPosition:
+              post.mainImage.hotspot &&
+              `${post.mainImage.hotspot.x * 100}% ${
+                post.mainImage.hotspot.y * 100
+              }%`,
+          }}
+        />
       )}
     </Link>
   );

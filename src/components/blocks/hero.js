@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Image, { HeroMobileImage } from "./image";
 import useWindowDimensions from "../functions/useWindowDimensions";
 import { Link } from "react-router-dom";
+import BlockContent from "./BlockContent";
 
-function Hero({ image, updateVisitedLinks, url }) {
+function Hero({ image, updateVisitedLinks, url, post }) {
   const { width, height } = useWindowDimensions();
+  const [isActive, setIsActive] = useState(false);
+
   return (
-    <div className="hero">
+    <div
+      className={isActive ? "hero active" : "hero"}
+      onMouseOut={function () {
+        setIsActive(false);
+      }}
+      onMouseEnter={function () {
+        setIsActive(true);
+      }}
+    >
       {url ? (
         <Link
           onClick={() => {
@@ -50,6 +61,14 @@ function Hero({ image, updateVisitedLinks, url }) {
           )}
         </>
       )}
+
+      <div
+        className={isActive ? "post_card_overlay active" : "post_card_overlay"}
+      >
+        {" "}
+        <p className="noMargin">{post.title}</p>
+        {post.time ? <BlockContent blocks={post.time} /> : <p>{post.year}</p>}
+      </div>
     </div>
   );
 }

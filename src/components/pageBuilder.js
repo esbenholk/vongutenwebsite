@@ -98,60 +98,65 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
           className={`flex-row block gap  ${pageBlock.fold && "fold"}`}
           style={{ maxWidth: "100%" }}
         >
-          {pageBlock.rowContent.map((rowBlock, index) => (
-            <div
-              key={index}
-              className="rowblock"
-              style={{
-                maxWidth:
-                  width > 900 && 100 / pageBlock.rowContent.length + "%",
-                // width:
-                //   width > 900 &&
-                //   pageBlock.fill &&
-                //   100 / pageBlock.rowContent.length + "%",
-              }}
-            >
-              {rowBlock.customImage && (
-                <div className="flex-column align-center">
-                  <ConstrainedImage image={rowBlock.customImage} />
-                  {rowBlock.customImage.imageDescription && (
-                    <p>{rowBlock.customImage.imageDescription}</p>
-                  )}
-                </div>
-              )}
-              {rowBlock.content && (
-                <div
-                  className={`textContent ${
-                    rowBlock.type === "explanationtext" && "minimisedtext"
-                  }`}
-                >
-                  <BlockContent blocks={rowBlock.content} />
-                </div>
-              )}
-              {rowBlock.images && (
-                <div className="flex-row wrap rowGallery">
-                  {rowBlock.images &&
-                    rowBlock.images.map((image, index) => (
-                      <SquareImage
-                        image={image}
-                        key={index}
-                        class_name={"instagrampic"}
-                        width={350}
-                      />
-                    ))}
-                </div>
-              )}
-            </div>
-          ))}
+          {pageBlock.rowContent &&
+            pageBlock.rowContent.map((rowBlock, index) => (
+              <div
+                key={index}
+                className="rowblock"
+                style={{
+                  maxWidth:
+                    width > 900 && 100 / pageBlock.rowContent.length + "%",
+                  // width:
+                  //   width > 900 &&
+                  //   pageBlock.fill &&
+                  //   100 / pageBlock.rowContent.length + "%",
+                }}
+              >
+                {rowBlock.customImage && (
+                  <div className="flex-column align-center">
+                    <ConstrainedImage image={rowBlock.customImage} />
+                    {rowBlock.customImage.imageDescription && (
+                      <p>{rowBlock.customImage.imageDescription}</p>
+                    )}
+                  </div>
+                )}
+                {rowBlock.content && (
+                  <div
+                    className={`textContent ${
+                      rowBlock.type === "explanationtext" && "minimisedtext"
+                    }`}
+                  >
+                    <BlockContent blocks={rowBlock.content} />
+                  </div>
+                )}
+                {rowBlock.images && (
+                  <div className="flex-row wrap rowGallery">
+                    {rowBlock.images &&
+                      rowBlock.images.map((image, index) => (
+                        <SquareImage
+                          image={image}
+                          key={index}
+                          class_name={"instagrampic"}
+                          width={350}
+                        />
+                      ))}
+                  </div>
+                )}
+              </div>
+            ))}
         </div>
       )}{" "}
       {pageBlock._type === "video" && (
         <div className="block blockitem">
           <h1>{pageBlock.title}</h1>
           <Video url={pageBlock.url} cover={pageBlock.cover} />
-          <div>
-            <BlockContent blocks={pageBlock.description} />
-          </div>
+
+          {pageBlock.description && (
+            <div>
+              {" "}
+              <BlockContent blocks={pageBlock.description} />
+            </div>
+          )}
         </div>
       )}
     </>

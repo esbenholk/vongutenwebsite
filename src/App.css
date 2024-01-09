@@ -346,7 +346,7 @@ select:focus {
 
 .cubedImage,
 .cube_card {
-  /* max-height: 550px; */
+  position: relative;
   max-width: 550px;
   margin: 3px 5px;
 }
@@ -423,7 +423,9 @@ select:focus {
   justify-content: center;
   align-items: center;
 }
-
+.hero.active img {
+  filter: blur(10px);
+}
 .db_item {
   width: 100%;
   justify-content: space-between;
@@ -439,10 +441,10 @@ select:focus {
 }
 .db_item a,
 .db_item p {
-  font-size: 30.7px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 300;
-  line-height: 38.4px; /* 125.081% */
+  line-height: 23px; /* 125.081% */
   white-space: nowrap;
 }
 
@@ -544,12 +546,17 @@ select:focus {
   justify-content: center;
   align-items: center;
   opacity: 0;
+  pointer-events: none;
   transition: all 0.1s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(128, 128, 128, 0.1);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  height: 100%;
 }
 .post_card_overlay div,
 .post_card_overlay p {
   pointer-events: none;
+  color: white;
 }
 .post_card_overlay.active {
   opacity: 1;
@@ -557,6 +564,14 @@ select:focus {
 .post_card span,
 .post_card img {
   flex-shrink: 0;
+  position: relative;
+}
+
+.blur {
+  /* filter: blur(10px); */
+  filter: blur(10px);
+
+  border: #1616f8 2px solid inset;
 }
 
 footer {
@@ -874,8 +889,8 @@ footer p {
   }
 }
 a.visited:after {
-  color: rgb(255, 0, 255);
+  color: purple;
 }
 a.visited {
-  color: rgb(255, 0, 255);
+  color: purple;
 }

@@ -406,6 +406,7 @@ export default function Projects({
                 sortedPosts.map((post, index) => (
                   <HeroProjectGrid
                     key={index}
+                    post={post}
                     image={post.heroImage ? post.heroImage : post.mainImage}
                     url={post.slug.current}
                     updateVisitedLinks={updateVisitedLinks}

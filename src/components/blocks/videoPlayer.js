@@ -10,8 +10,8 @@ export default class VideoPlayer extends React.Component {
 
     this.state = {
       display: "block",
-      thumbnail: props.videoContent.cover,
-      url: props.videoContent.url,
+      thumbnail: props.cover,
+      url: props.url,
     };
   }
 
