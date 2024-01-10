@@ -12,6 +12,7 @@ export default function LandingPage({
   visitedLinks,
   updateSiteColor,
   updateShouldToggleMode,
+  updateSiteSound,
 }) {
   const myContext = useContext(AppContext);
   const info = myContext.siteSettings;
@@ -21,7 +22,17 @@ export default function LandingPage({
     updateShouldToggleMode(false);
 
     updateSiteColor(info.color);
-  }, [slug, info.color, updateSiteColor, updateShouldToggleMode]);
+    if (info.audio) {
+      updateSiteSound(info.audio);
+    }
+  }, [
+    slug,
+    info.color,
+    updateSiteColor,
+    updateShouldToggleMode,
+    info.audio,
+    updateSiteSound,
+  ]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

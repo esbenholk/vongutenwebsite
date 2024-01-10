@@ -30,7 +30,7 @@ export default function Image(props) {
               exit={{ opacity: 0 }}
               src={urlFor(image.asset).width(width).url()}
               placeholdersrc={urlFor(image.asset).height(2).url()}
-              key={image.asset._ref}
+              // key={image.asset._ref}
               alt={image.alt}
               style={{
                 objectPosition: `${image.hotspot.x * 100}% ${
@@ -49,7 +49,7 @@ export default function Image(props) {
               exit={{ opacity: 0 }}
               src={urlFor(image.asset).width(width).url()}
               placeholdersrc={urlFor(image.asset).height(2).url()}
-              key={image.asset._ref}
+              // key={image.asset._ref}
               alt={image.alt}
               className={classs}
               effect="blur"

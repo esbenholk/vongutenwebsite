@@ -1,15 +1,15 @@
 import React from "react";
 import BlockContent from "./blocks/BlockContent";
-import Hero from "./blocks/hero";
+import { StaticHero } from "./blocks/hero";
 import Video from "./blocks/videoPlayer";
 import ConnectedProjects from "./connectedProject";
 import ConnectedRessources from "./connectedRessources";
 import Projects from "./blocks/ProjectSorting";
 import Image from "./blocks/image";
-import Masonry from "react-responsive-masonry";
 import { SquareImage } from "./blocks/squareCard";
 import { ConstrainedImage } from "./blocks/image";
 import useWindowDimensions from "./functions/useWindowDimensions";
+import CustomCarousel from "./blocks/Carousel";
 
 function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
   const { width } = useWindowDimensions();
@@ -22,22 +22,15 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
         <>
           <div className="gallery">
             {pageBlock.images ? (
-              <Masonry columnsCount={3}>
-                {pageBlock.images.map((image, index) => (
-                  <SquareImage
-                    image={image}
-                    key={index}
-                    class_name={"instagrampic"}
-                    width={550}
-                  />
-                ))}
-              </Masonry>
+              <>
+                <CustomCarousel images={pageBlock.images} />
+              </>
             ) : null}
           </div>
         </>
       )}
       {pageBlock._type === "hero" && (
-        <Hero
+        <StaticHero
           image={pageBlock.image}
           heading={pageBlock.heading}
           tagLine={pageBlock.tagline}
@@ -147,7 +140,7 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
         </div>
       )}{" "}
       {pageBlock._type === "video" && (
-        <div className="block blockitem">
+        <>
           <h1>{pageBlock.title}</h1>
           <Video url={pageBlock.url} cover={pageBlock.cover} />
 
@@ -157,7 +150,7 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
               <BlockContent blocks={pageBlock.description} />
             </div>
           )}
-        </div>
+        </>
       )}
     </>
   );
@@ -170,13 +163,13 @@ function PageBlockContainer({ pageBlock, updateVisitedLinks, visitedLinks }) {
       {pageBlock.type === "fullwidth" ? (
         <div className="fullwidthblockitem">
           {pageBlock._type !== "hero" && pageBlock.title ? (
-            <div className="headline block">
+            <div className="headline">
               <BlockContent blocks={pageBlock.title} />
             </div>
           ) : null}
           {pageBlock.pageBuilder &&
             pageBlock.pageBuilder.map((page, index) => (
-              <div key={index} className="block">
+              <div key={index}>
                 <PageBlock
                   pageBlock={page}
                   updateVisitedLinks={updateVisitedLinks}

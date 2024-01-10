@@ -1,5 +1,6 @@
-:root {
+.mainContainer {
   --primary-color: black;
+  --font-color: black;
   --secondary-color: #f6f6f6;
   --third-color: white;
   --font-size: 15px;
@@ -55,7 +56,7 @@ button {
   justify-content: space-around;
 }
 .space-between {
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .align-right {
   justify-content: flex-end;
@@ -101,11 +102,10 @@ footer a {
 }
 
 .greeting div p {
-  color: #000;
-  font-size: 70px;
+  font-size: 45px;
   font-style: normal;
   font-weight: 300;
-  line-height: 70px; /* 100% */
+  line-height: normal; /* 100% */
 }
 
 a,
@@ -299,6 +299,11 @@ select:focus {
   text-decoration: none;
   background-color: grey;
 }
+#modeSelecting option img {
+  min-width: 35px;
+  height: 15px;
+  background-color: blue;
+}
 .select-dropdown {
   position: absolute;
   list-style: none;
@@ -335,6 +340,87 @@ select:focus {
   border-radius: 25px;
 }
 
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dropdown-toggle {
+  position: fixed;
+  top: 0;
+  right: 0;
+  appearance: none;
+  display: block;
+  margin: 10px;
+
+  text-align: right;
+  z-index: 99999;
+  color: #000;
+  font-size: 30.7px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 38.4px; /* 125.081% */
+  text-decoration: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+}
+
+.dropdown-toggle.open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dropdown-options {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 35px;
+  right: 35px;
+  width: fit-content;
+  background-color: grey;
+  display: none;
+  z-index: 99999999999;
+  border-radius: 10px;
+}
+
+.dropdown-options.open {
+  display: block;
+}
+
+.dropdown-options li {
+  border-radius: 10px;
+
+  padding: 10px;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  text-align: right;
+  z-index: 99999;
+  color: #000;
+  font-size: 30.7px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 38.4px; /* 125.081% */
+  text-decoration: none;
+  background-color: grey;
+}
+
+.dropdown-options li:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-options img {
+  min-width: 35px;
+  height: auto;
+  object-fit: contain;
+}
+
 .regPadding {
   padding: var(--regPadding);
 }
@@ -347,7 +433,7 @@ select:focus {
 .cubedImage,
 .cube_card {
   position: relative;
-  max-width: 550px;
+  max-width: 700px;
   margin: 3px 5px;
 }
 .cubedImage img,
@@ -366,6 +452,9 @@ select:focus {
   max-width: 100%;
   object-fit: contain;
 }
+.modeButton {
+  background-color: rgba(0, 0, 0, 0);
+}
 
 /* ////////MENU HEADER/////////// */
 
@@ -383,9 +472,9 @@ select:focus {
 }
 .menu_link {
   display: block;
-  margin: var(--margin-size);
+  margin: 10px;
   z-index: 99999;
-  color: #000;
+
   font-size: 30.7px;
   font-style: normal;
   font-weight: 300;
@@ -404,6 +493,10 @@ select:focus {
   position: relative;
   width: 100%;
   min-height: 528px;
+  margin-bottom: 90px;
+}
+.hero:is(:last-child) {
+  margin-bottom: 0px;
 }
 .hero span,
 .hero span img {
@@ -430,14 +523,14 @@ select:focus {
   width: 100%;
   justify-content: space-between;
   padding: 1px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--primary-color);
 }
 .db_item .year {
-  width: 350px;
+  width: 200px;
 }
 
 .db_item .description {
-  width: 45%;
+  width: 50%;
 }
 .db_item a,
 .db_item p {
@@ -445,7 +538,7 @@ select:focus {
   font-style: normal;
   font-weight: 300;
   line-height: 23px; /* 125.081% */
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .tagButtons {
@@ -506,8 +599,6 @@ select:focus {
 }
 .projectdetailslist p,
 .projectdetailslist a {
-  color: #000;
-
   font-size: 18.4px;
   font-style: normal;
   font-weight: 300;
@@ -583,13 +674,12 @@ footer .flex-column {
 
 footer a,
 footer p {
-  color: #000;
-  font-size: 25px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 400;
-  line-height: 30px; /* 120% */
+  line-height: 22px; /* 120% */
   text-transform: capitalize;
-  padding-top: 15px;
+  padding-top: 5px;
 }
 
 .rowblock:has(.textContent):is(:last-child) {
@@ -612,6 +702,25 @@ footer p {
 .page .textBlock,
 .page .heading {
   padding: 10px;
+}
+
+.carouselContainer {
+  position: relative;
+}
+.carouselContainer .carousel {
+  padding-top: 40px;
+}
+.carouselContainer .featuredCardArrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 35px;
+  width: 35px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+.featuredCardArrow.nextArrow {
+  right: 30px;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -649,7 +758,9 @@ footer p {
   .centered {
     width: 100%;
   }
-
+  .hero {
+    margin-bottom: 0px;
+  }
   .rowblock:has(.textContent):is(:last-child) {
     margin-left: 10px;
   }
@@ -676,7 +787,6 @@ footer p {
   }
   footer a,
   footer p {
-    color: #000;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -691,7 +801,6 @@ footer p {
   }
   .flex-row.fold {
     flex-direction: column;
-    gap: var(--font-size);
   }
   .projectdetailslist .flex-row .flex-column:is(:first-child) {
     min-width: 0;
@@ -814,9 +923,40 @@ footer p {
   .introImage .flex-column {
     max-width: 100%;
   }
+
+  .dropdown-toggle {
+    position: fixed;
+    top: 0;
+    right: 0;
+    appearance: none;
+    display: block;
+    text-align: right;
+    z-index: 99999;
+    color: #000;
+    font-size: 30.7px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 38.4px; /* 125.081% */
+    text-decoration: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 32px;
+    height: 23px;
+  }
+  .selected-option {
+    height: 15px;
+    display: flex;
+    max-width: 100%;
+  }
+  .selected-option img {
+    height: 15px;
+    width: 32px;
+  }
 }
 @media only screen and (max-width: 600px) {
-  :root {
+  .mainContainer {
     --regPadding: 1rem;
   }
   .leftMargin {
@@ -833,10 +973,9 @@ footer p {
     max-width: 100%;
   }
 
-  /* .rowblock:has(.textContent) {
-    min-width: 50%;
-  } */
-
+  .dropdown-toggle {
+    margin: 5px;
+  }
   footer {
     padding: 15px 34px 100px 34px;
   }
@@ -848,11 +987,11 @@ footer p {
   }
   .db_item a,
   .db_item p {
-    color: #000;
     font-size: 20.5px;
     font-style: normal;
     font-weight: 300;
     line-height: 25.59px; /* 124.829% */
+    white-space: nowrap;
   }
   .db_item .year {
     width: 180px;
@@ -862,7 +1001,6 @@ footer p {
   }
 
   .menu_link {
-    color: #000;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
@@ -878,7 +1016,6 @@ footer p {
 @media only screen and (max-width: 400px) {
   .db_item a,
   .db_item p {
-    color: #000;
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
@@ -893,4 +1030,12 @@ a.visited:after {
 }
 a.visited {
   color: purple;
+}
+.mainContainer {
+  background-color: var(--secondary-color);
+}
+
+.mainContainer.night {
+  --secondary-color: #494949;
+  --primary-color: white;
 }

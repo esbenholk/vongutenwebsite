@@ -13,6 +13,7 @@ export default function SlugContext({
   updateVisitedLinks,
   visitedLinks,
   updateShouldToggleMode,
+  updateSiteSound,
 }) {
   const { slug } = useParams();
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function SlugContext({
           CategoryNames={CategoryNames}
           PageNames={PageNames}
           updateSiteColor={updateSiteColor}
+          updateSiteSound={updateSiteSound}
           updateVisitedLinks={updateVisitedLinks}
           visitedLinks={visitedLinks}
           updateShouldToggleMode={updateShouldToggleMode}
@@ -35,6 +37,7 @@ export default function SlugContext({
             CategoryNames={CategoryNames}
             PageNames={PageNames}
             updateSiteColor={updateSiteColor}
+            updateSiteSound={updateSiteSound}
             updateVisitedLinks={updateVisitedLinks}
             visitedLinks={visitedLinks}
             updateShouldToggleMode={updateShouldToggleMode}

@@ -36,7 +36,7 @@ export default class VideoPlayer extends React.Component {
           <div className="videoContainer">
             <ReactPlayer
               width="100%"
-              height="10vh"
+              height="450px"
               style={{ transform: "translate(0,50%);" }}
               url={this.state.url}
               // playing={this.state.shouldPlay}
@@ -80,7 +80,7 @@ export default class VideoPlayer extends React.Component {
           <div className="videoContainer">
             <ReactPlayer
               width="100%"
-              height="100vh"
+              height="450px"
               url={this.state.url}
               playing={true}
               controls

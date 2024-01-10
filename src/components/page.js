@@ -8,11 +8,10 @@ import { pageBuilderquerystring } from "../queeries";
 import Loader from "./blocks/loader";
 
 export default function SinglePage({
-  CategoryNames,
-  PageNames,
   visitedLinks,
   updateVisitedLinks,
   updateSiteColor,
+  updateSiteSound,
   updateShouldToggleMode,
 }) {
   const { slug } = useParams();
@@ -29,10 +28,14 @@ export default function SinglePage({
         setSinglePage(data[0]);
         if (data[0].color) {
           updateSiteColor(data[0].color);
+
+          if (data[0].audio) {
+            updateSiteSound(data[0].audio.asset.url);
+          }
         }
       })
       .catch(console.error);
-  }, [slug, updateShouldToggleMode, updateSiteColor]);
+  }, [slug, updateShouldToggleMode, updateSiteColor, updateSiteSound]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

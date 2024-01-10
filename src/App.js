@@ -27,6 +27,8 @@ function App() {
   const [colorCode, setColorCode] = useState("blue");
   const [shouldToggleMode, setShouldToggleMode] = useState(false);
   const [visitedLinks, setVisitedLinks] = useState([]);
+  const [isNightMode, setIsNightMode] = useState(false);
+  const [sound, setSound] = useState();
 
   const updateVisitedLinks = (newLink) => {
     setVisitedLinks([...visitedLinks, newLink]);
@@ -35,20 +37,33 @@ function App() {
 
   const updateSiteColor = (newColor) => {
     setColorCode(newColor);
-    console.log("should update color", newColor);
   };
 
   const updateShouldToggleMode = (bool) => {
     setShouldToggleMode(bool);
   };
+
+  const setNightMode = (bool) => {
+    setIsNightMode(bool);
+  };
+
+  const updateSiteSound = (soundUrl) => {
+    if (soundUrl !== sound) {
+      console.log("has new sound", soundUrl);
+
+      setSound(soundUrl);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   // get sitesettings and page names (for slug redirection)
   useEffect(() => {
     sanityClient
       .fetch(
-        `*[_type == "siteSettings" ]{comingProjects, color, mainImage{asset->{_id,url}, hotspot},mainImage2{asset->{_id,url}, hotspot}, logo{asset->{_id,url}}, logo2{asset->{_id,url}}, greeting, greeting2,title,favicon{asset->{_id,url}}, title,  greeting, logo{asset->{_id,url}, hotspot}, breadContent,footerMenuSocials[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, ${pageBuilderquerystring},  headerMenu[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, footerMenu {_type == "linkArrayColumns" => { _type,heading, columns[]{heading, links{external_links[]{title, image, url, page->{slug}, project->{slug}}}}}}}`
+        `*[_type == "siteSettings" ]{comingProjects, color,audio, mainImage{asset->{_id,url}, hotspot},mainImage2{asset->{_id,url}, hotspot}, logo{asset->{_id,url}}, logo2{asset->{_id,url}}, greeting, greeting2,title,favicon{asset->{_id,url}}, title,  greeting, logo{asset->{_id,url}, hotspot}, breadContent,footerMenuSocials[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, ${pageBuilderquerystring},  headerMenu[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, footerMenu {_type == "linkArrayColumns" => { _type,heading, columns[]{heading, links{external_links[]{title, image, url, page->{slug}, project->{slug}}}}}}}`
       )
       .then((data) => {
         console.log("SITE SETTINGS", data);
@@ -83,7 +98,7 @@ function App() {
   useEffect(() => {
     sanityClient
       .fetch(
-        ' *[_type == "project"]{ title, year, time, mainImage, heroImage, featuredImage, slug, description, tags, categories[]->{title, slug}}'
+        ' *[_type == "project"]{ title, year, time, mainImage, heroImage, featuredImage,hoverImage, slug, description, tags, categories[]->{title, slug}}'
       )
       .then((data) => {
         data.sort((a, b) => b.year - a.year);
@@ -141,7 +156,9 @@ function App() {
               <BrowserRouter>
                 <AnimatePresence>
                   <motion.div
-                    className="mainContainer"
+                    className={
+                      isNightMode ? "mainContainer night" : "mainContainer"
+                    }
                     ref={mainRef}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -156,6 +173,7 @@ function App() {
                             updateVisitedLinks={updateVisitedLinks}
                             visitedLinks={visitedLinks}
                             updateSiteColor={updateSiteColor}
+                            updateSiteSound={updateSiteSound}
                             updateShouldToggleMode={updateShouldToggleMode}
                           />
                         }
@@ -169,6 +187,7 @@ function App() {
                               CategoryNames={categoryNames}
                               PageNames={pageNames}
                               updateSiteColor={updateSiteColor}
+                              updateSiteSound={updateSiteSound}
                               updateVisitedLinks={updateVisitedLinks}
                               visitedLinks={visitedLinks}
                               updateShouldToggleMode={updateShouldToggleMode}
@@ -177,15 +196,20 @@ function App() {
                         ></Route>
                       )}
                     </Routes>
+                    <Header
+                      color={colorCode}
+                      shouldToggleMode={shouldToggleMode}
+                    />
+                    <Footer
+                      setNightMode={setNightMode}
+                      color={colorCode}
+                      sound={sound}
+                      // visitedLinks={visitedLinks}
+                      // updateVisitedLinks={updateVisitedLinks}
+                      logo={siteSettings.logo}
+                    />
                   </motion.div>
                 </AnimatePresence>
-                <Header color={colorCode} shouldToggleMode={shouldToggleMode} />
-                <Footer
-                  color={colorCode}
-                  // visitedLinks={visitedLinks}
-                  // updateVisitedLinks={updateVisitedLinks}
-                  logo={siteSettings.logo}
-                />
               </BrowserRouter>
             </AppContext.Provider>
           </Suspense>

@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import BlockContent from "./blocks/BlockContent";
 import AppContext from "../globalState";
 import Image from "./blocks/image";
 import MenuItem from "./blocks/menuItem";
+import ReactAudioPlayer from "react-audio-player";
 
-export default function Footer({ color, logo }) {
+export default function Footer({ color, logo, sound, setNightMode }) {
   const myContext = useContext(AppContext);
   const info = myContext.siteSettings;
+  const [muted, setMuted] = useState(false);
+  const [localNightMode, setLocalNightMode] = useState(false);
 
   console.log("footer", info);
 
@@ -20,6 +23,10 @@ export default function Footer({ color, logo }) {
           position: "relative",
         }}
       >
+        {sound && (
+          <ReactAudioPlayer src={sound} muted={muted} autoPlay={true} loop />
+        )}
+
         <div
           style={{
             zIndex: 0,
@@ -32,8 +39,57 @@ export default function Footer({ color, logo }) {
           }}
         ></div>
         <footer>
-          <div className="logo">
-            <Image image={logo} />
+          <div className="flex-row space-between">
+            <div className="logo">
+              <Image image={logo} />
+            </div>
+            <div>
+              <button
+                onClick={function () {
+                  setMuted(!muted);
+                }}
+                className="modeButton"
+              >
+                {muted ? (
+                  <img
+                    src={
+                      localNightMode
+                        ? process.env.PUBLIC_URL + "assets/unMuteLight.png"
+                        : process.env.PUBLIC_URL + "assets/unMuteDark.png"
+                    }
+                    alt={"unmute"}
+                  />
+                ) : (
+                  <img
+                    src={
+                      localNightMode
+                        ? process.env.PUBLIC_URL + "assets/muteLight.png"
+                        : process.env.PUBLIC_URL + "assets/muteDark.png"
+                    }
+                    alt={"mute"}
+                  />
+                )}
+              </button>
+              <button
+                className="modeButton"
+                onClick={function () {
+                  setNightMode(!localNightMode);
+                  setLocalNightMode(!localNightMode);
+                }}
+              >
+                {!localNightMode ? (
+                  <img
+                    src={process.env.PUBLIC_URL + "assets/lightmode.png"}
+                    alt={"lightMode"}
+                  />
+                ) : (
+                  <img
+                    src={process.env.PUBLIC_URL + "assets/nightmode.png"}
+                    alt={"darkmode"}
+                  />
+                )}
+              </button>
+            </div>
           </div>
 
           <div className="flex-row align-right fold">

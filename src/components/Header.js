@@ -18,7 +18,7 @@ export default function Header({ color, shouldToggleMode }) {
       {info.headerMenu && (
         <>
           <NavLink key={"/"} to={"/"} className={"menu_link"} exact="true">
-            About
+            ABOUT
           </NavLink>
           {info.headerMenu.map((menuItem, index) => (
             <div

@@ -14,6 +14,7 @@ function ConnectedRessources({
 
   useEffect(() => {
     setConnectedRessources([]);
+    let tempRessources = [];
     if (ressources) {
       setConnectedRessources(ressources);
     } else if (categories != null && categories.length > 0) {
@@ -31,14 +32,15 @@ function ConnectedRessources({
               for (let index = 0; index < data[0].ressource.length; index++) {
                 const ressource = data[0].ressource[index];
 
+                tempRessources.push(ressource);
                 console.log("has ressource", ressource);
-                setConnectedRessources((prevArray) => [
-                  ...prevArray,
-                  ressource,
-                ]);
+                // setConnectedRessources((prevArray) => [
+                //   ...prevArray,
+                //   ressource,
+                // ]);
               }
             }
-
+            setConnectedRessources(tempRessources);
             // setConnectedRessources((prevArray) => [
             //   ...prevArray,
             //   tempRessources,

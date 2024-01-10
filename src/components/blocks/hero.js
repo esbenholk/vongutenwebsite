@@ -66,9 +66,42 @@ function Hero({ image, updateVisitedLinks, url, post }) {
         className={isActive ? "post_card_overlay active" : "post_card_overlay"}
       >
         {" "}
-        <p className="noMargin">{post.title}</p>
-        {post.time ? <BlockContent blocks={post.time} /> : <p>{post.year}</p>}
+        {post && (
+          <>
+            {" "}
+            <p className="noMargin">{post.title}</p>
+            {post.time ? (
+              <BlockContent blocks={post.time} />
+            ) : (
+              <p>{post.year}</p>
+            )}
+          </>
+        )}
       </div>
+    </div>
+  );
+}
+
+export function StaticHero({ image }) {
+  const { width, height } = useWindowDimensions();
+
+  return (
+    <div className={"hero"}>
+      {width > 900 ? (
+        <Image
+          image={image}
+          width={width}
+          height={height}
+          class={"hero-image"}
+        />
+      ) : (
+        <HeroMobileImage
+          image={image}
+          width={width}
+          height={height}
+          class={"hero-image"}
+        />
+      )}
     </div>
   );
 }

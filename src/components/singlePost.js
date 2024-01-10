@@ -12,9 +12,8 @@ import { Link } from "react-router-dom";
 import BreadContent from "./blocks/BreadContent";
 
 export default function SinglePost({
-  CategoryNames,
-  PageNames,
   updateSiteColor,
+  updateSiteSound,
   updateVisitedLinks,
   visitedLinks,
   updateShouldToggleMode,
@@ -32,7 +31,7 @@ export default function SinglePost({
 
     sanityClient
       .fetch(
-        `*[_type == "project" && slug.current == "${slug}"]{ title, headline, year, time, place, client, description, fulldescription, details, slug,year,time, mainImage, heroImage, type, tags, categories[]->{title, slug, color},${pageBuilderquerystring}} `
+        `*[_type == "project" && slug.current == "${slug}"]{ title, headline, year, time, place, client, description, fulldescription, details, slug,year,time, mainImage, heroImage, hoverImage, type, tags, categories[]->{title, slug, color},${pageBuilderquerystring}} `
       )
       .then((data) => {
         console.log("project details", data, slug);
@@ -40,10 +39,16 @@ export default function SinglePost({
         if (data[0].categories) {
           updateSiteColor(data[0].categories[0].color);
           setMainCategory(data[0].categories[0]);
+          if (
+            data[0].categories[0].audio &&
+            data[0].categories[0].audio.asset.url
+          ) {
+            updateSiteSound(data[0].categories[0].audio.asset.url);
+          }
         }
       })
       .catch(console.error);
-  }, [slug, updateShouldToggleMode, updateSiteColor]);
+  }, [slug, updateShouldToggleMode, updateSiteColor, updateSiteSound]);
 
   if (!project) return <Loader />;
   return (

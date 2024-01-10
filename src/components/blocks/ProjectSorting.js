@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 
 import Masonry from "react-responsive-masonry";
 import { SquareCard } from "./squareCard.js";
@@ -32,6 +32,22 @@ export default function Projects({
   const [currentCategories, setCurrentCategories] = useState([]);
   const [years, setYears] = useState([]);
   const [currentYears, setCurrentYears] = useState([]);
+  const [selectCurrentYearValue, setSelectCurrentYearValue] =
+    useState("AllTime");
+
+  const resetSearch = useCallback(() => {
+    setCurrentYears([]);
+    setSelectCurrentYearValue("AllTime");
+    setCurrentCategories([]);
+    setCurrentTags([]);
+
+    let buttons = document.getElementsByClassName("yeartag");
+    if (buttons) {
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
+    }
+  }, []);
 
   useEffect(() => {
     var tags = [];
@@ -55,8 +71,6 @@ export default function Projects({
       setSortedPosts(projectList);
       tempProjectList = projectList;
     }
-
-    console.log("project list", tempProjectList);
 
     for (let index = 0; index < tempProjectList.length; index++) {
       const post = tempProjectList[index];
@@ -180,6 +194,7 @@ export default function Projects({
   }, [currentTags, allPosts, currentCategories, currentYears]);
 
   useEffect(() => {
+    resetSearch();
     if (allPosts) {
       for (let index = 0; index < allPosts.length; index++) {
         const post = allPosts[index];
@@ -217,7 +232,7 @@ export default function Projects({
         }
       }
     }
-  }, [allPosts, highlightedTag]);
+  }, [allPosts, highlightedTag, resetSearch]);
 
   function setTag(_tag) {
     let tag;
@@ -259,6 +274,13 @@ export default function Projects({
     }
     const tempYears = [];
     if (year === "AllTime") {
+      setSelectCurrentYearValue("AllTime");
+      currentYears.forEach((year) => {
+        let button = document.getElementById("year_" + year.toString());
+        if (button) {
+          button.classList.remove("active");
+        }
+      });
       setCurrentYears(tempYears);
     } else if (!currentYears.includes(year)) {
       // const tempYears = [...currentYears];
@@ -267,6 +289,7 @@ export default function Projects({
 
       tempYears.push(year);
       setCurrentYears(tempYears);
+      setSelectCurrentYearValue(year);
 
       let button = document.getElementById("year_" + year.toString());
       if (button) {
@@ -316,6 +339,7 @@ export default function Projects({
           <select
             name="yearSorting"
             id="yearSorting"
+            value={selectCurrentYearValue}
             onChange={(evt) => {
               setYear(evt.currentTarget.value);
             }}
@@ -330,7 +354,7 @@ export default function Projects({
             {years &&
               years.map((year, index) => (
                 <option
-                  className="sortingButton"
+                  className="sortingButton yeartag"
                   key={index}
                   id={"year_" + year.toString()}
                   value={year}
@@ -435,6 +459,7 @@ export default function Projects({
                   description={project.description}
                   updateVisitedLinks={updateVisitedLinks}
                   visitedLinks={visitedLinks}
+                  image={project.hoverImage}
                 />
               ))
             : null}
@@ -448,6 +473,7 @@ export default function Projects({
                   description={project.description}
                   updateVisitedLinks={updateVisitedLinks}
                   visitedLinks={visitedLinks}
+                  image={project.hoverImage}
                 />
               ))
             : null}
