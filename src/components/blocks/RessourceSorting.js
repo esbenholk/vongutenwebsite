@@ -426,7 +426,7 @@ export default function Ressources({
                   key={index}
                   url={project.link}
                   title={project.title}
-                  year={project.time ? project.time : project.year}
+                  // year={project.time ? project.time : project.year}
                   description={project.description}
                   updateVisitedLinks={updateVisitedLinks}
                   visitedLinks={visitedLinks}

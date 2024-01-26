@@ -80,7 +80,7 @@ function ConnectedRessources({
             visitedLinks={visitedLinks}
             displayCategoryButton={types.cansortbycategory}
             displayTagButton={types.cansortbytag}
-            displayYearButton={types.cansortbyyear}
+            displayYearButton={false}
           />
         )}
       </div>

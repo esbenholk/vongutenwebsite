@@ -333,7 +333,19 @@ export default function Projects({
   }
 
   return (
-    <div className="projects">
+    <div
+      className="projects"
+      onMouseLeave={() => {
+        let cursorImages = document.getElementsByClassName("cursorimg");
+
+        if (cursorImages) {
+          for (let index = 0; index < cursorImages.length; index++) {
+            const cursorImage = cursorImages[index];
+            cursorImage.style.display = "none";
+          }
+        }
+      }}
+    >
       <div className="flex-row tagButtons over-flow">
         {displayYearButton && (
           <select

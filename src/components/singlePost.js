@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import sanityClient from "../client";
 import { useParams } from "react-router-dom";
 import { HeadTags } from "./blocks/helmetHeaderTags";
@@ -10,6 +10,7 @@ import AppContext from "../globalState";
 import BlockContent from "./blocks/BlockContent";
 import { Link } from "react-router-dom";
 import BreadContent from "./blocks/BreadContent";
+import { StaticHero } from "./blocks/hero";
 
 export default function SinglePost({
   updateSiteColor,
@@ -22,6 +23,7 @@ export default function SinglePost({
   const [project, setproject] = useState();
   const myContext = useContext(AppContext);
   const [mainCategory, setMainCategory] = useState();
+  const scollToRef = useRef([]);
   ///get project data, set category names
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,7 +33,7 @@ export default function SinglePost({
 
     sanityClient
       .fetch(
-        `*[_type == "project" && slug.current == "${slug}"]{ title, headline, year, time, place, client, description, fulldescription, details, slug,year,time, mainImage, heroImage, hoverImage, type, tags, categories[]->{title, slug, color},${pageBuilderquerystring}} `
+        `*[_type == "project" && slug.current == "${slug}"]{ title, headline, year, time, place, client, description, fulldescription, details, slug,year,time, mainImage, heroImage,shouldStartProjectPageWithHeroImage, hoverImage, type, tags, categories[]->{title, slug, color},${pageBuilderquerystring}} `
       )
       .then((data) => {
         console.log("project details", data, slug);
@@ -60,7 +62,35 @@ export default function SinglePost({
             description={project.description}
             image={project.mainImage.asset.url}
           />
-          <div className="projectPage singlePost">
+          {project.shouldStartProjectPageWithHeroImage && (
+            <div
+              style={{
+                position: "relative",
+              }}
+              className="projectPageHero"
+            >
+              <StaticHero image={project.heroImage} />
+
+              <img
+                style={{
+                  height: "30px",
+                  width: "30px",
+                  position: "absolute",
+                  bottom: 0,
+                  padding: "10px",
+                }}
+                onClick={() => {
+                  if (scollToRef.current) {
+                    scollToRef.current.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                src={`../assets/downArrow.png`}
+                alt="nextArrow"
+              />
+            </div>
+          )}
+
+          <div className="projectPage singlePost" ref={scollToRef}>
             <div className="block">
               <BreadContent
                 content={

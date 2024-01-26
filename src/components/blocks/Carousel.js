@@ -4,7 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import useWindowDimensions from "../functions/useWindowDimensions";
 import { SquareImage } from "./squareCard";
-import Masonry from "react-responsive-masonry";
+// import Masonry from "react-responsive-masonry";
 
 export default function CustomCarousel({ images, classsss, description }) {
   const { width } = useWindowDimensions();
@@ -38,9 +38,9 @@ export default function CustomCarousel({ images, classsss, description }) {
                   style={{
                     height: "30px",
                     width: "30px",
-                    transform: "rotate(180deg)",
+                    // transform: "rotate(180deg)",
                   }}
-                  src={`../assets/returnArrow.png`}
+                  src={`../assets/ArrowLeft.png`}
                   alt="prevArrow"
                 />
               </button>
@@ -57,7 +57,7 @@ export default function CustomCarousel({ images, classsss, description }) {
               >
                 <img
                   style={{ height: "30px", width: "30px" }}
-                  src={`../assets/returnArrow.png`}
+                  src={`../assets/ArrowRight.png`}
                   alt="nextArrow"
                 />
               </button>
@@ -74,18 +74,16 @@ export default function CustomCarousel({ images, classsss, description }) {
           ))}
         </Carousel>
       ) : (
-        <>
-          <Masonry columnsCount={3}>
-            {images.map((image, index) => (
-              <SquareImage
-                image={image}
-                key={index}
-                class_name={"instagrampic"}
-                width={700}
-              />
-            ))}
-          </Masonry>
-        </>
+        <div className="flex-row justify-center align-center block wrap">
+          {images.map((image, index) => (
+            <SquareImage
+              image={image}
+              key={index}
+              class_name={"instagrampic"}
+              // width={700}
+            />
+          ))}
+        </div>
       )}
       {description && <p className="smallp">{description}</p>}{" "}
     </div>

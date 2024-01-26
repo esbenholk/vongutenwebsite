@@ -63,7 +63,7 @@ function App() {
   useEffect(() => {
     sanityClient
       .fetch(
-        `*[_type == "siteSettings" ]{comingProjects, color,audio, mainImage{asset->{_id,url}, hotspot},mainImage2{asset->{_id,url}, hotspot}, logo{asset->{_id,url}}, logo2{asset->{_id,url}}, greeting, greeting2,title,favicon{asset->{_id,url}}, title,  greeting, logo{asset->{_id,url}, hotspot}, breadContent,footerMenuSocials[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, ${pageBuilderquerystring},  headerMenu[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, footerMenu {_type == "linkArrayColumns" => { _type,heading, columns[]{heading, links{external_links[]{title, image, url, page->{slug}, project->{slug}}}}}}}`
+        `*[_type == "siteSettings" ]{connectedRandoms,comingProjects, color,audio, mainImage{asset->{_id,url}, hotspot},mainImage2{asset->{_id,url}, hotspot}, logo{asset->{_id,url}}, logo2{asset->{_id,url}}, greeting, greeting2,title,favicon{asset->{_id,url}}, title,  greeting, logo{asset->{_id,url}, hotspot}, breadContent,footerMenuSocials[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, ${pageBuilderquerystring},  headerMenu[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, footerMenu {_type == "linkArrayColumns" => { _type,heading, columns[]{heading, links{external_links[]{title, image, url, page->{slug}, project->{slug}}}}}}}`
       )
       .then((data) => {
         console.log("SITE SETTINGS", data);

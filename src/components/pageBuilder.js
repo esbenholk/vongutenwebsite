@@ -10,6 +10,7 @@ import { SquareImage } from "./blocks/squareCard";
 import { ConstrainedImage } from "./blocks/image";
 import useWindowDimensions from "./functions/useWindowDimensions";
 import CustomCarousel from "./blocks/Carousel";
+import DBItem from "./blocks/db_item";
 
 function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
   const { width } = useWindowDimensions();
@@ -59,6 +60,31 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
           displayYearButton={true}
         />
       )}
+      {pageBlock._type === "connectedRandoms" && (
+        <>
+          <div className="flex-column">
+            {" "}
+            {pageBlock.heading && (
+              <h1 className="heading">{pageBlock.heading}</h1>
+            )}
+            {pageBlock.randoms && pageBlock.randoms.length > 0 && (
+              <div className="list">
+                {pageBlock.randoms.map((project, index) => (
+                  <DBItem
+                    key={index}
+                    url={project.link}
+                    title={project.title}
+                    year={project.time ? project.time : project.year}
+                    description={project.description}
+                    updateVisitedLinks={updateVisitedLinks}
+                    visitedLinks={visitedLinks}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
       {pageBlock._type === "expandedBreadContent" && (
         <div className="block">
           {pageBlock.content && <BlockContent blocks={pageBlock.content} />}
@@ -67,7 +93,7 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
       {pageBlock._type === "breadContent" && (
         <>
           {pageBlock.content && (
-            <div className="textBlock block">
+            <div className="textBlock">
               <BlockContent blocks={pageBlock.content} />
             </div>
           )}
@@ -130,7 +156,7 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
                           image={image}
                           key={index}
                           class_name={"instagrampic"}
-                          width={350}
+                          // width={350}
                         />
                       ))}
                   </div>
@@ -142,7 +168,7 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
       {pageBlock._type === "video" && (
         <>
           <h1>{pageBlock.title}</h1>
-          <Video url={pageBlock.url} cover={pageBlock.cover} />
+          <Video url={pageBlock.url} cover={pageBlock.cover} width={width} />
 
           {pageBlock.description && (
             <div>
@@ -191,7 +217,7 @@ function PageBlockContainer({ pageBlock, updateVisitedLinks, visitedLinks }) {
             <div className="flex-column centered">
               {pageBlock.pageBuilder &&
                 pageBlock.pageBuilder.map((page, index) => (
-                  <div key={index} className="block">
+                  <div key={index}>
                     <PageBlock
                       pageBlock={page}
                       updateVisitedLinks={updateVisitedLinks}

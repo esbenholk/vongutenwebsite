@@ -63,7 +63,15 @@ export default function LandingPage({
           </div>
         </div>
       </div>
-      {info.pageBuilder && <PageBuilder pageBuilder={info.pageBuilder} />}
+      <div className="landingPagePageBuilder">
+        {info.pageBuilder && (
+          <PageBuilder
+            pageBuilder={info.pageBuilder}
+            updateVisitedLinks={updateVisitedLinks}
+            visitedLinks={visitedLinks}
+          />
+        )}
+      </div>
       <div className="flex-column">
         <Projects
           isproject={true}
