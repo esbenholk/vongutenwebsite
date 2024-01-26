@@ -76,8 +76,10 @@ export default function SinglePost({
                   height: "30px",
                   width: "30px",
                   position: "absolute",
-                  bottom: 0,
-                  padding: "10px",
+                  bottom: "10px",
+                  left: "50%",
+                  transform: "translate(50%,0)",
+                  margin: "10px",
                 }}
                 onClick={() => {
                   if (scollToRef.current) {

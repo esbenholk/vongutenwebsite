@@ -491,7 +491,7 @@ select:focus {
   margin: 10px;
   z-index: 99999;
 
-  font-size: 30.7px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 300;
   line-height: 38.4px; /* 125.081% */
@@ -550,6 +550,13 @@ select:focus {
 
 .db_item .description {
   width: 50%;
+}
+.ressourcelist .db_item .description {
+  width: 70%;
+  overflow-x: scroll;
+}
+.ressourcelist .db_item .title {
+  width: 200px;
 }
 .db_item a,
 .db_item p {
@@ -721,6 +728,9 @@ footer p {
 .page .textBlock,
 .heading {
   padding: 10px;
+}
+.heading {
+  font-size: 30px;
 }
 
 .carouselContainer {
@@ -1038,7 +1048,8 @@ footer p {
   .db_item .year {
     width: 180px;
   }
-  .ressourcelist .year {
+
+  .ressourcelist .db_item .title {
     width: 120px;
   }
 
@@ -1064,6 +1075,9 @@ footer p {
     line-height: 17px; /* 124.829% */
   }
   .db_item .year {
+    width: 150px;
+  }
+  .ressourcelist .db_item .title {
     width: 150px;
   }
 }

@@ -58,7 +58,7 @@ function DBItem({
             className={`title ${
               visitedLinks && visitedLinks.includes(url) ? "visited" : "new"
             }`}
-            to={"" + url}
+            to={"/" + url}
             onClick={() => {
               console.log("should update links");
               updateVisitedLinks(url);
@@ -124,6 +124,7 @@ function DBItem({
             position: "fixed",
             top: mousePosition.y,
             left: mousePosition.x,
+            transform: "translate(0, -100%)",
             display: `${isActive ? "block" : "none"}`,
             zIndex: 99999999,
             opacity: 1,
