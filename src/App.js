@@ -87,6 +87,7 @@ function App() {
           for (let index = 0; index < data.length; index++) {
             const cat = data[index];
             tempCategoryNames.push(cat.slug.current.toLowerCase());
+            console.log(cat.slug.current.toLowerCase());
           }
           setCategoryNames(tempCategoryNames);
         }

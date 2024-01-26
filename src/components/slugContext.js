@@ -21,7 +21,9 @@ export default function SlugContext({
   }, []);
   return (
     <>
-      {CategoryNames.find((name) => name.toLowerCase() === slug) ? (
+      {CategoryNames.find(
+        (name) => name.toLowerCase() === slug.toLowerCase()
+      ) ? (
         <Category
           CategoryNames={CategoryNames}
           PageNames={PageNames}
@@ -31,7 +33,9 @@ export default function SlugContext({
           visitedLinks={visitedLinks}
           updateShouldToggleMode={updateShouldToggleMode}
         />
-      ) : PageNames.find((name) => name.slug.current.toLowerCase() === slug) ? (
+      ) : PageNames.find(
+          (name) => name.slug.current.toLowerCase() === slug.toLowerCase()
+        ) ? (
         <>
           <SinglePage
             CategoryNames={CategoryNames}

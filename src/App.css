@@ -120,7 +120,7 @@ p {
   font-size: 30.7px;
   font-style: normal;
   font-weight: 300;
-  line-height: 38.4px; /* 125.081% */
+  /* line-height: 38.4px; 125.081% */
 }
 .smallp p,
 .smallp {
@@ -662,7 +662,7 @@ select:focus {
   /* filter: blur(10px); */
   filter: blur(10px);
 
-  border: #1616f8 2px solid inset;
+  /* border: #1616f8 2px solid inset; */
 }
 
 footer {
@@ -831,7 +831,7 @@ footer p {
     font-size: 20.7px;
     font-style: normal;
     font-weight: 300;
-    line-height: 38.4px; /* 125.081% */
+    /* line-height: 38.4px; 125.081% */
   }
   .smallp p,
   .smallp {
@@ -846,6 +846,13 @@ footer p {
   .minip {
     font-size: 12px;
     line-height: normal;
+  }
+
+  .greeting div p {
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 40px;
   }
 
   a strong,
@@ -883,7 +890,7 @@ footer p {
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
-    line-height: 38.4px; /* 125.081% */
+    /* line-height: 38.4px; 125.081% */
   }
   h3 strong {
     font-weight: 700;
