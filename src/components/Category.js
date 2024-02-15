@@ -149,9 +149,9 @@ export default function Category({
   }
 
   const options = [
-    { label: "Database View", imageSrc: "assets/databaseview.png" },
-    { label: "FullPage View", imageSrc: "assets/fullwidth.png" },
-    { label: "Grid View", imageSrc: "assets/grid.png" },
+    { label: "Database View", imageSrc: "assets/databaseview.svg" },
+    { label: "FullPage View", imageSrc: "assets/fullwidth.svg" },
+    { label: "Grid View", imageSrc: "assets/grid.svg" },
   ];
   const handleOptionSelect = (option) => {
     setMode(option.label);
