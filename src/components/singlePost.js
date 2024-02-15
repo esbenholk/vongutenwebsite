@@ -73,20 +73,19 @@ export default function SinglePost({
 
               <img
                 style={{
-                  height: "30px",
                   width: "30px",
                   position: "absolute",
                   bottom: "10px",
                   left: "50%",
-                  transform: "translate(50%,0)",
-                  margin: "10px",
+                  transform: "translate(-50%,0)",
                 }}
                 onClick={() => {
                   if (scollToRef.current) {
                     scollToRef.current.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-                src={`../assets/downArrow.png`}
+                src={`../assets/Down.svg`}
+                className={"blacksvgturnwhite"}
                 alt="nextArrow"
               />
             </div>
@@ -218,6 +217,22 @@ export default function SinglePost({
             {project.pageBuilder && (
               <PageBuilder pageBuilder={project.pageBuilder} />
             )}
+
+            <div className="flex-row align-center">
+              <img
+                style={{
+                  width: "30px",
+                }}
+                onClick={() => {
+                  if (scollToRef.current) {
+                    scollToRef.current.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                src={`../assets/Up.svg`}
+                className={"blacksvgturnwhite"}
+                alt="nextArrow"
+              />
+            </div>
           </div>
           <div className="flex-column">
             <Projects

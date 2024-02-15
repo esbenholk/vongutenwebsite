@@ -45,6 +45,7 @@ function CustomDropdown({ options, onSelect, currentOption }) {
               <img
                 src={process.env.PUBLIC_URL + currentOption.imageSrc}
                 alt={currentOption.label}
+                className={"blacksvgturnwhite"}
               />
             ) : (
               <p>{currentOption.label}</p>

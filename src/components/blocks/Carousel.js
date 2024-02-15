@@ -36,11 +36,12 @@ export default function CustomCarousel({ images, classsss, description }) {
               >
                 <img
                   style={{
-                    height: "30px",
-                    width: "30px",
+                    height: "50px",
+                    // width: "30px",
                     // transform: "rotate(180deg)",
                   }}
-                  src={`../assets/ArrowLeft.png`}
+                  className={"blacksvgturnwhite"}
+                  src={`../assets/Left.svg`}
                   alt="prevArrow"
                 />
               </button>
@@ -56,8 +57,12 @@ export default function CustomCarousel({ images, classsss, description }) {
                 }}
               >
                 <img
-                  style={{ height: "30px", width: "30px" }}
-                  src={`../assets/ArrowRight.png`}
+                  style={{
+                    height: "50px",
+                    // width: "30px"
+                  }}
+                  className={"blacksvgturnwhite"}
+                  src={`../assets/Right.svg`}
                   alt="nextArrow"
                 />
               </button>
