@@ -36,7 +36,7 @@ export default class VideoPlayer extends React.Component {
         <ReactPlayer
           width={this.props.width > 800 ? "800px" : "100%"}
           height={this.props.width > 800 ? "450px" : "300px"}
-          style={{ transform: "translate(0,50%);" }}
+          style={{ transform: "translate(0,50%)" }}
           url={this.state.url}
           // playing={this.state.shouldPlay}
           controls

@@ -37,7 +37,7 @@ export default function SinglePost({
       )
       .then((data) => {
         setproject(data[0]);
-        if (data[0].categories) {
+        if (data[0].categories && data[0].categories.length > 0) {
           updateSiteColor(data[0].categories[0].color);
           setMainCategory(data[0].categories[0]);
           if (
@@ -147,21 +147,25 @@ export default function SinglePost({
                           <strong>Category</strong>
                         </p>
                         <div className="flex-row wrap">
-                          <Link
-                            className={`tag ${
-                              visitedLinks.includes(project.categories[0].title)
-                                ? "visited"
-                                : "new"
-                            }`}
-                            to={"/" + project.categories[0].slug.current}
-                            onClick={(evt) => {
-                              updateVisitedLinks(
-                                project.categories[0].slug.current
-                              );
-                            }}
-                          >
-                            {project.categories[0].title}
-                          </Link>
+                          {project.categories &&
+                            project.categories.length > 0 && (
+                              <Link
+                                className={`tag ${
+                                  visitedLinks.includes([0].title)
+                                    ? "visited"
+                                    : "new"
+                                }`}
+                                to={"/" + project.categories[0].slug.current}
+                                onClick={(evt) => {
+                                  updateVisitedLinks(
+                                    project.categories[0].slug.current
+                                  );
+                                }}
+                              >
+                                {project.categories[0].title}
+                              </Link>
+                            )}
+
                           {/* {project.categories &&
                             project.categories.map((category, index) => (
                               <Link
@@ -186,6 +190,7 @@ export default function SinglePost({
                               </Link>
                             ))} */}
                           {project.tags &&
+                            mainCategory &&
                             project.tags.map((tag, index) => (
                               <Link
                                 className={`tag ${
