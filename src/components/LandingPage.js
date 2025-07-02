@@ -37,8 +37,6 @@ export default function LandingPage({
     window.scrollTo(0, 0);
   }, []);
 
-  console.log("LANDING PAGE", info, myContext.projectList);
-
   return (
     <>
       <div
@@ -56,7 +54,11 @@ export default function LandingPage({
         </div>
         <div className="flex-column">
           <div className="logo">
-            <Image image={isImage1 ? info.logo : info.logo2} />
+            {myContext.isNightMode && info.logowhite != null ? (
+              <Image image={isImage1 ? info.logowhite : info.whitelogo2} />
+            ) : (
+              <Image image={isImage1 ? info.logo : info.logo2} />
+            )}
           </div>
           <div className="greeting logo">
             <BlockContent blocks={isImage1 ? info.greeting : info.greeting2} />

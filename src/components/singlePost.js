@@ -36,7 +36,6 @@ export default function SinglePost({
         `*[_type == "project" && slug.current == "${slug}"]{ title, headline, year, time, place, client, description, fulldescription, details, slug,year,time, mainImage, heroImage,shouldStartProjectPageWithHeroImage, hoverImage, type, tags, categories[]->{title, slug, color},${pageBuilderquerystring}} `
       )
       .then((data) => {
-        console.log("project details", data, slug);
         setproject(data[0]);
         if (data[0].categories) {
           updateSiteColor(data[0].categories[0].color);

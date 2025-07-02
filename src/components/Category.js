@@ -53,24 +53,26 @@ function CustomDropdown({ options, onSelect, currentOption }) {
           </div>
         )}
       </div>
-      <ul className={`dropdown-options ${isOpen ? "open" : ""}`}>
-        {options.map((option, index) => (
-          <li
-            className=""
-            key={index}
-            onClick={() => handleOptionClick(option)}
-          >
-            {width < 900 ? (
-              <img
-                src={process.env.PUBLIC_URL + option.imageSrc}
-                alt={option.label}
-              />
-            ) : (
-              <p> {option.label}</p>
-            )}
-          </li>
-        ))}
-      </ul>
+      {options && (
+        <ul className={`dropdown-options ${isOpen ? "open" : ""}`}>
+          {options.map((option, index) => (
+            <li
+              className=""
+              key={index}
+              onClick={() => handleOptionClick(option)}
+            >
+              {width < 900 ? (
+                <img
+                  src={process.env.PUBLIC_URL + option.imageSrc}
+                  alt={option.label}
+                />
+              ) : (
+                <p> {option.label}</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -141,6 +143,7 @@ export default function Category({
   for (var i = 0; i < projectList.length; i++) {
     var project = projectList[i];
     if (
+      project.categories &&
       project.categories.find(
         (category) => category.title.toLowerCase() === slug
       )

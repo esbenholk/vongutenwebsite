@@ -11,8 +11,6 @@ export default function Footer({ color, logo, sound, setNightMode }) {
   const [muted, setMuted] = useState(false);
   const [localNightMode, setLocalNightMode] = useState(false);
 
-  console.log("footer", info);
-
   return (
     <>
       <div

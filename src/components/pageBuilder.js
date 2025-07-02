@@ -183,7 +183,6 @@ function PageBlock({ pageBlock, visitedLinks, updateVisitedLinks }) {
 }
 
 function PageBlockContainer({ pageBlock, updateVisitedLinks, visitedLinks }) {
-  console.log("PAGEBLOCK", pageBlock);
   return (
     <div className="blockitem">
       {pageBlock.type === "fullwidth" ? (
@@ -237,8 +236,6 @@ export default function PageBuilder({
   updateVisitedLinks,
   visitedLinks,
 }) {
-  console.log("PAGEBUILDER", pageBuilder);
-
   return (
     <div>
       {pageBuilder.map((page, index) => (

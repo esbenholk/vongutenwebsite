@@ -32,7 +32,6 @@ function App() {
 
   const updateVisitedLinks = (newLink) => {
     setVisitedLinks([...visitedLinks, newLink]);
-    console.log(visitedLinks);
   };
 
   const updateSiteColor = (newColor) => {
@@ -49,8 +48,6 @@ function App() {
 
   const updateSiteSound = (soundUrl) => {
     if (soundUrl !== sound) {
-      console.log("has new sound", soundUrl);
-
       setSound(soundUrl);
     }
   };
@@ -63,12 +60,13 @@ function App() {
   useEffect(() => {
     sanityClient
       .fetch(
-        `*[_type == "siteSettings" ]{connectedRandoms,comingProjects, color,audio, mainImage{asset->{_id,url}, hotspot},mainImage2{asset->{_id,url}, hotspot}, logo{asset->{_id,url}}, logo2{asset->{_id,url}}, greeting, greeting2,title,favicon{asset->{_id,url}}, title,  greeting, logo{asset->{_id,url}, hotspot}, breadContent,footerMenuSocials[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, ${pageBuilderquerystring},  headerMenu[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, footerMenu {_type == "linkArrayColumns" => { _type,heading, columns[]{heading, links{external_links[]{title, image, url, page->{slug}, project->{slug}}}}}}}`
+        `*[_type == "siteSettings" ]{connectedRandoms,comingProjects, color,audio, mainImage{asset->{_id,url}, hotspot},mainImage2{asset->{_id,url}, hotspot}, logo{asset->{_id,url}}, logo2{asset->{_id,url}}, logowhite{asset->{_id,url}}, whitelogo2{asset->{_id,url}}, greeting, greeting2,title,favicon{asset->{_id,url}}, title,  greeting, logo{asset->{_id,url}, hotspot}, breadContent,footerMenuSocials[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, ${pageBuilderquerystring},  headerMenu[] {_type == "menuItem" => { _type, image, page->{slug}, project->{slug}, url, title}}, footerMenu {_type == "linkArrayColumns" => { _type,heading, columns[]{heading, links{external_links[]{title, image, url, page->{slug}, project->{slug}}}}}}}`
       )
       .then((data) => {
-        console.log("SITE SETTINGS", data);
         setSiteSettings(data[0]);
         setColorCode(data[0].color);
+
+        console.log("hej internet surfer, wanna be friends 4 real?");
       })
       .catch(console.error);
 
@@ -87,7 +85,6 @@ function App() {
           for (let index = 0; index < data.length; index++) {
             const cat = data[index];
             tempCategoryNames.push(cat.slug.current.toLowerCase());
-            console.log(cat.slug.current.toLowerCase());
           }
           setCategoryNames(tempCategoryNames);
         }
@@ -105,7 +102,6 @@ function App() {
         data.sort((a, b) => b.year - a.year);
 
         setProjectList(data);
-        console.log("PROJECT LISt", data);
 
         // var categories = [];
         // var tempCategoryNames = [];
@@ -135,6 +131,7 @@ function App() {
     categories: categories,
     mainRef: mainRef,
     colorCode: colorCode,
+    isNightMode: isNightMode,
     setSiteSettings,
     setProjectList,
     setTags,

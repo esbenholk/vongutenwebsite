@@ -64,13 +64,14 @@ export default function Projects({
     if (!projectList) {
       setAllPosts(myContext.projectList);
       setSortedPosts(myContext.projectList);
-      console.log("finds all projects", myContext);
       tempProjectList = myContext.projectList;
     } else {
       setAllPosts(projectList);
       setSortedPosts(projectList);
       tempProjectList = projectList;
     }
+
+    if (!tempProjectList) return;
 
     for (let index = 0; index < tempProjectList.length; index++) {
       const post = tempProjectList[index];
@@ -128,14 +129,6 @@ export default function Projects({
     ) {
       const tempSortedPosts = [];
 
-      console.log(
-        "search criteria has been updated",
-        currentTags,
-        currentCategories,
-        currentYears,
-        allPosts
-      );
-
       ///loop through all posts
       for (let index = 0; index < allPosts.length; index++) {
         const post = allPosts[index];
@@ -182,14 +175,6 @@ export default function Projects({
       setSortedPosts(tempSortedPosts);
     } else {
       setSortedPosts(allPosts);
-
-      console.log(
-        "search is empty",
-        currentTags,
-        currentCategories,
-        currentYears,
-        allPosts
-      );
     }
   }, [currentTags, allPosts, currentCategories, currentYears]);
 

@@ -711,6 +711,7 @@ footer p {
   line-height: 22px; /* 120% */
   text-transform: capitalize;
   padding-top: 5px;
+  color: white;
 }
 
 .rowblock:has(.textContent):is(:last-child) {
